@@ -1,17 +1,18 @@
 package org.example;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Rent {
 
     private final int rentId;
     private double rentCost;
-    private final Date rentStartDate;
-    private Date rentEndDate;
+    private final GregorianCalendar rentStartDate;
+    private GregorianCalendar rentEndDate;
     private final Client client;
     private final Room room;
 
-    public Rent(int rentId, Date rentStartDate, Client client, Room room) {
+    public Rent(int rentId, GregorianCalendar rentStartDate, Client client, Room room) {
         this.rentId = rentId;
         this.rentStartDate = rentStartDate;
         this.client = client;
@@ -26,11 +27,11 @@ public class Rent {
         return rentCost;
     }
 
-    public Date getRentStartDate() {
+    public GregorianCalendar getRentStartDate() {
         return rentStartDate;
     }
 
-    public Date getRentEndDate() {
+    public GregorianCalendar getRentEndDate() {
         return rentEndDate;
     }
 
@@ -42,16 +43,24 @@ public class Rent {
         return room;
     }
 
-    public void endRent(Date rentEndDate) {
-        this.rentEndDate = rentEndDate;
+    public void endRent(GregorianCalendar endDate) {
+        if (endDate.before(rentStartDate)) {
+            rentEndDate = rentStartDate;
+        } else {
+            rentEndDate = endDate;
+        }
+        calculateFinalRentCost();
     }
 
     public int getRentDays() {
-        return (int) ((rentEndDate.getTime() - rentStartDate.getTime()) / (1000 * 60 * 60 * 24));
+        return (int) ((rentEndDate.getTimeInMillis() - rentStartDate.getTimeInMillis()) / (1000 * 60 * 60 * 24));
     }
 
-    public double calculateFinalRentCost() {
-        return 0;
-        // TODO end this method
+    public void calculateFinalRentCost() {
+        rentCost = client.applyDiscount(getRentDays() * room.getBasePrice());
     }
+
+//    public String toString() {
+//        return String.format("Rent %d - %s - %s - %.2f EUR", rentId, rentStartDate.getTime(), rentEndDate.getTime(), rentCost);
+//    }
 }

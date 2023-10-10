@@ -6,7 +6,6 @@ public class Client {
     private String lastName;
     private final String personalId;
     private ClientType clientType;
-
     private boolean archived;
 
     public Client(String firstName, String lastName, String personalId, ClientType clientType) {
@@ -52,13 +51,12 @@ public class Client {
         return archived;
     }
 
-    public String toString() {
-        return "Client{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", personalId='" + personalId + '\'' +
-                ", clientType=" + clientType +
-                ", archived=" + archived +
-                '}';
+    double applyDiscount(double price) {
+        return price - clientType.applyDiscount(price);
     }
+
+//    public String toString() {
+//        String archived = isArchived() ? "archived" : "active";
+//        return String.format("%s %s (%s) - %s", firstName, lastName, personalId, archived);
+//    }
 }
