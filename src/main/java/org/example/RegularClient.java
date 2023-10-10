@@ -1,14 +1,23 @@
 package org.example;
 
-public class RegularClient implements ClientType {
+import jakarta.persistence.*;
 
-        @Override
-        public double applyDiscount(double price) {
-            return price * 0.7;
-        }
+@Entity
+@Access(AccessType.FIELD)
+@DiscriminatorValue("regularclient")
+public class RegularClient extends Client {
 
-        @Override
-        public String getType() {
-            return "Regular";
-        }
+    private double discount;
+
+    public RegularClient(String firstName, String lastName, String personalId, double discount) {
+        super(firstName, lastName, personalId);
+        this.discount = discount;
+    }
+
+
+    @Override
+    public double applyDiscount(double price) {
+        return price * this.discount;
+    }
+
 }

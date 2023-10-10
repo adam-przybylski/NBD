@@ -1,25 +1,37 @@
 package org.example;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.NotFound;
+
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+@Entity
+@Access(AccessType.FIELD)
 public class Rent {
 
-    private final int rentId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long rentId;
     private double rentCost;
     private final GregorianCalendar rentStartDate;
     private GregorianCalendar rentEndDate;
-    private final Client client;
+
+    @ManyToOne
+    @JoinColumn
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn
     private final Room room;
 
-    public Rent(int rentId, GregorianCalendar rentStartDate, Client client, Room room) {
-        this.rentId = rentId;
+    public Rent(GregorianCalendar rentStartDate, Client client, Room room) {
         this.rentStartDate = rentStartDate;
         this.client = client;
         this.room = room;
     }
 
-    public int getRentId() {
+    public long getRentId() {
         return rentId;
     }
 

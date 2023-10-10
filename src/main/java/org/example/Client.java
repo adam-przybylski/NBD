@@ -1,18 +1,35 @@
 package org.example;
 
-public class Client {
+import jakarta.persistence.*;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
+@Access(AccessType.FIELD)
+public abstract class Client {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private final String personalId;
-    private ClientType clientType;
     private boolean archived;
 
-    public Client(String firstName, String lastName, String personalId, ClientType clientType) {
+    public Client(String firstName, String lastName, String personalId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalId = personalId;
-        this.clientType = clientType;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -27,9 +44,6 @@ public class Client {
         return personalId;
     }
 
-    public ClientType getClientType() {
-        return clientType;
-    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -39,9 +53,6 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public void setClientType(ClientType clientType) {
-        this.clientType = clientType;
-    }
 
     public void setArchived(boolean archived) {
         this.archived = archived;
@@ -51,9 +62,7 @@ public class Client {
         return archived;
     }
 
-    double applyDiscount(double price) {
-        return price - clientType.applyDiscount(price);
-    }
+    abstract double applyDiscount(double price);
 
     public String toString() {
         String archived = isArchived() ? "archived" : "active";

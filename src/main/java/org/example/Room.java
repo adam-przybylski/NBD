@@ -1,7 +1,24 @@
 package org.example;
 
+import jakarta.persistence.*;
+
+@Entity
+@Access(AccessType.FIELD)
 public class Room {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Column(unique = true)
     private final int roomNumber;
     private final int roomCapacity;
     private double basePrice;
