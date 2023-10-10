@@ -55,8 +55,8 @@ public class Client {
         return price - clientType.applyDiscount(price);
     }
 
-//    public String toString() {
-//        String archived = isArchived() ? "archived" : "active";
-//        return String.format("%s %s (%s) - %s", firstName, lastName, personalId, archived);
-//    }
+    public String toString() {
+        String archived = isArchived() ? "archived" : "active";
+        return String.format("%s %s (%s) - %s", firstName, lastName, personalId, archived);
+    }
 }

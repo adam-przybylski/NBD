@@ -53,14 +53,14 @@ public class Rent {
     }
 
     public int getRentDays() {
-        return (int) ((rentEndDate.getTimeInMillis() - rentStartDate.getTimeInMillis()) / (1000 * 60 * 60 * 24));
+        return (int) Math.ceil((double) (rentEndDate.getTimeInMillis() - rentStartDate.getTimeInMillis()) / (1000 * 60 * 60 * 24));
     }
 
     public void calculateFinalRentCost() {
         rentCost = client.applyDiscount(getRentDays() * room.getBasePrice());
     }
 
-//    public String toString() {
-//        return String.format("Rent %d - %s - %s - %.2f EUR", rentId, rentStartDate.getTime(), rentEndDate.getTime(), rentCost);
-//    }
+    public String toString() {
+        return String.format("Rent %d - %s - %s - %.2f EUR", rentId, rentStartDate.getTime(), rentEndDate.getTime(), rentCost);
+    }
 }

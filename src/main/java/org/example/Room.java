@@ -37,8 +37,8 @@ public class Room {
         this.archived = archived;
     }
 
-//    public String toString() {
-//        String archived = isArchived() ? "archived" : "active";
-//        return String.format("Room %d - %d person(s) - %.2f EUR - %s", roomNumber, roomCapacity, basePrice, archived);
-//    }
+    public String toString() {
+        String archived = isArchived() ? "archived" : "active";
+        return String.format("Room %d - %d person(s) - %.2f EUR - %s", roomNumber, roomCapacity, basePrice, archived);
+    }
 }
