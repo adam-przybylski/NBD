@@ -24,10 +24,17 @@ public class Room {
     private double basePrice;
     private boolean archived;
 
+    @Version
+    private int version;
+
     public Room(int roomNumber, int roomCapacity, double basePrice) {
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
         this.basePrice = basePrice;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public int getRoomNumber() {
