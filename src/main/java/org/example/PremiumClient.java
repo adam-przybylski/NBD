@@ -19,6 +19,10 @@ public class PremiumClient extends Client{
         this.discount = discount;
     }
 
+    public PremiumClient() {
+
+    }
+
 
     @Override
     public double applyDiscount(double price) {

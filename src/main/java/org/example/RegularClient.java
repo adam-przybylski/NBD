@@ -14,6 +14,10 @@ public class RegularClient extends Client {
         this.discount = discount;
     }
 
+    public RegularClient() {
+
+    }
+
 
     @Override
     public double applyDiscount(double price) {

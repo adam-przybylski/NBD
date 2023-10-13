@@ -14,6 +14,10 @@ public class Default extends Client {
         super(firstName, lastName, personalId);
     }
 
+    public Default() {
+
+    }
+
     @Override
     public double applyDiscount(double price) {
         return 0;

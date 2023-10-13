@@ -10,6 +10,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    public Room() {
+
+    }
+
     public long getId() {
         return id;
     }
@@ -19,10 +23,10 @@ public class Room {
     }
 
     @Column(unique = true)
-    private final int roomNumber;
-    private final int roomCapacity;
+    private int roomNumber;
+    private int roomCapacity;
     private double basePrice;
-    private boolean archived;
+    private boolean available;
 
     @Version
     private int version;
@@ -31,6 +35,7 @@ public class Room {
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
         this.basePrice = basePrice;
+        this.available = true;
     }
 
     public int getVersion() {
@@ -49,20 +54,20 @@ public class Room {
         return basePrice;
     }
 
-    public boolean isArchived() {
-        return archived;
+    public boolean isAvailable() {
+        return available;
     }
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
 
-    public void setArchived(boolean archived) {
-        this.archived = archived;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public String toString() {
-        String archived = isArchived() ? "archived" : "active";
+        String archived = isAvailable() ? "archived" : "active";
         return String.format("Room %d - %d person(s) - %.2f EUR - %s", roomNumber, roomCapacity, basePrice, archived);
     }
 }

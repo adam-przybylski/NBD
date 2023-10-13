@@ -15,13 +15,20 @@ public abstract class Client {
     private String lastName;
 
     @Column(unique = true)
-    private final String personalId;
+    private String personalId;
     private boolean archived;
+
+    @Version
+    private long version;
 
     public Client(String firstName, String lastName, String personalId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalId = personalId;
+    }
+
+    public Client() {
+
     }
 
     public long getId() {

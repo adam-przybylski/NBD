@@ -14,8 +14,11 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long rentId;
     private double rentCost;
-    private final GregorianCalendar rentStartDate;
+    private GregorianCalendar rentStartDate;
     private GregorianCalendar rentEndDate;
+
+    @Version
+    private long version;
 
     @ManyToOne
     @JoinColumn
@@ -23,12 +26,16 @@ public class Rent {
 
     @ManyToOne
     @JoinColumn
-    private final Room room;
+    private Room room;
 
     public Rent(GregorianCalendar rentStartDate, Client client, Room room) {
         this.rentStartDate = rentStartDate;
         this.client = client;
         this.room = room;
+    }
+
+    public Rent() {
+
     }
 
     public long getRentId() {
