@@ -4,6 +4,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+
+import java.util.List;
 
 public class RentRepository {
 
@@ -24,6 +29,22 @@ public class RentRepository {
         em.persist(rent);
         transaction.commit();
         em.close();
+    }
+
+    public static List<Rent> readAllRents() {
+        if(emf == null) {
+            try {
+                emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        EntityManager em = emf.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Rent> query = cb.createQuery(Rent.class);
+        Root<Rent> rootEntry = query.from(Rent.class);
+        query.select(rootEntry);
+        return em.createQuery(query).getResultList();
     }
 
 }
