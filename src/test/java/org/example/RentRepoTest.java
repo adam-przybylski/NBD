@@ -13,9 +13,7 @@ public class RentRepoTest {
     private static Client client;
     private static Room room;
     private static Rent rent;
-
     private static EntityManagerFactory emf;
-
     private static EntityManager em;
 
     @BeforeAll
