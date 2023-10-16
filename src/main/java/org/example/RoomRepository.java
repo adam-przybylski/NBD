@@ -99,4 +99,19 @@ public class RoomRepository {
         em.close();
     }
 
+    public static boolean isRoomAvailable(long roomID) {
+        if(emf == null) {
+            try {
+                emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Room room = em.find(Room.class, roomID, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        em.getTransaction().commit();
+        em.close();
+        return room.isAvailable();
+    }
 }

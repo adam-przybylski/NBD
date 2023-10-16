@@ -34,6 +34,8 @@
       <!-- For Hibernate schema generation (use 'update' to update schema) -->
       <property name="hibernate.hbm2ddl.auto" value="update"/>
 
+      <!--For jakarta set isolation level      -->
+      <property name="jakarta.persistence.jdbc.connection.isolation" value="TRANSACTION_READ_COMMITTED"/>
     </properties>
   </persistence-unit>
 </persistence>

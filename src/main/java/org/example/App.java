@@ -13,10 +13,10 @@ import jakarta.persistence.Persistence;
  */
 public class App {
     public static void main(String[] args) {
-//        Room room1 = new Room(19, 31, 12);
-//        Client client = new RegularClient("John", "Doe", "187456789", 0.5);
+        Room room1 = new Room(19, 31, 12);
+        Client client = new RegularClient("John", "Doe", "187456789", 0.5);
 //        Rent rent = new Rent(new GregorianCalendar(2021, Calendar.JANUARY, 1), client, room1);
-//        RoomRepository.createRoom(room1);
+        RoomRepository.createRoom(room1);
 //        ClientRepository.createClient(client);
 //        RentRepository.createRent(rent);
 //        List<Room> rooms = RoomRepository.readAllRooms();
