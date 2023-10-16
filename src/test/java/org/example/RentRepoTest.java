@@ -20,9 +20,6 @@ public class RentRepoTest {
 
     @BeforeAll
     public static void setup() {
-        client = new RegularClient("John", "Doe", "187456789", 0.5);
-        room = new Room(19, 31, 12);
-        rent = new Rent(new GregorianCalendar(2021, Calendar.JANUARY, 1), client, room);
         emf = Persistence.createEntityManagerFactory("my-persistence-unit");
         em = emf.createEntityManager();
     }
@@ -34,6 +31,9 @@ public class RentRepoTest {
         em.createQuery("delete from Room").executeUpdate();
         em.createQuery("delete from Client").executeUpdate();
         em.getTransaction().commit();
+        client = new RegularClient("John", "Doe", "187456789", 0.5);
+        room = new Room(19, 31, 12);
+        rent = new Rent(new GregorianCalendar(2021, Calendar.JANUARY, 1), client, room);
     }
 
     @AfterAll

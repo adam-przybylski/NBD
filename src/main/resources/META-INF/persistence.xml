@@ -25,7 +25,7 @@
       <property name="eclipselink.logging.level" value="FINE"/>
 
       <!-- For database schema generation (use 'create' for initial setup, 'update' for subsequent runs) -->
-      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
 
       <!-- For Hibernate SQL logging -->
       <property name="hibernate.show_sql" value="true"/>

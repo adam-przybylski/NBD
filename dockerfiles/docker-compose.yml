@@ -8,14 +8,17 @@ services:
       POSTGRES_DB: nbddb
       POSTGRES_USER: nbd
       POSTGRES_PASSWORD: nbdpassword
+
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - pg:/var/lib/postgresql/data
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+
 volumes:
   pg:
