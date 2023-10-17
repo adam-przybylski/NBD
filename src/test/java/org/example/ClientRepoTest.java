@@ -20,6 +20,8 @@ public class ClientRepoTest {
     @BeforeEach
     public void clearData() {
         em.getTransaction().begin();
+        em.createQuery("delete from Rent").executeUpdate();
+        em.createQuery("delete from Room").executeUpdate();
         em.createQuery("delete from Client").executeUpdate();
         em.getTransaction().commit();
         client = new RegularClient("John", "Doe", "187456789", 0.5);

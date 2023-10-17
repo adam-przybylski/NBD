@@ -20,7 +20,9 @@ public class RoomRepoTest {
     @BeforeEach
     public void clearData() {
         em.getTransaction().begin();
+        em.createQuery("delete from Rent").executeUpdate();
         em.createQuery("delete from Room").executeUpdate();
+        em.createQuery("delete from Client").executeUpdate();
         em.getTransaction().commit();
         room = new Room(19, 31, 12);
     }
