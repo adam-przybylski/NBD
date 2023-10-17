@@ -81,4 +81,18 @@ public class RentRepoTest {
         RentRepository.endRent(rent);
         Assertions.assertTrue(RoomRepository.isRoomAvailable(room.getId()));
     }
+
+    @Test
+    public void testRentSameRoom() {
+        ClientRepository.createClient(client);
+        RoomRepository.createRoom(room);
+        RentRepository.createRent(rent);
+        Assertions.assertNotNull(rent);
+        Assertions.assertNotNull(room);
+        Assertions.assertNotNull(client);
+        Assertions.assertFalse(RoomRepository.isRoomAvailable(room.getId()));
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            RentRepository.createRent(rent);
+        });
+    }
 }
