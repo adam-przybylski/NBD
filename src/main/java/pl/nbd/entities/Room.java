@@ -1,31 +1,29 @@
 package pl.nbd.entities;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
+import java.util.UUID;
+
 public class Room {
 
-    private long id;
-
-    public Room() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    @BsonProperty("_id")
+    private UUID id;
+    @BsonProperty("roomNumber")
     private int roomNumber;
+    @BsonProperty("roomCapacity")
     private int roomCapacity;
+    @BsonProperty("basePrice")
     private double basePrice;
-    private boolean available;
 
-    public Room(int roomNumber, int roomCapacity, double basePrice) {
+    @BsonCreator
+    public Room(
+                @BsonProperty("roomNumber") int roomNumber,
+                @BsonProperty("roomCapacity") int roomCapacity,
+                @BsonProperty("basePrice") double basePrice) {
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
         this.basePrice = basePrice;
-        this.available = true;
     }
 
     public int getRoomNumber() {
@@ -40,20 +38,18 @@ public class Room {
         return basePrice;
     }
 
-    public boolean isAvailable() {
-        return available;
-    }
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
 
     public String toString() {
-        String archived = isAvailable() ? "archived" : "active";
-        return String.format("Room %d - %d person(s) - %.2f EUR - %s", roomNumber, roomCapacity, basePrice, archived);
+        return "Room{" +
+                "id=" + id.toString() +
+                "roomNumber=" + roomNumber +
+                ", roomCapacity=" + roomCapacity +
+                ", basePrice=" + basePrice +
+                '}';
     }
 }

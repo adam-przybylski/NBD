@@ -1,33 +1,45 @@
 package pl.nbd.repositories;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import pl.nbd.entities.AbstractMongoRepository;
 import pl.nbd.entities.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RoomRepository {
+public class RoomRepository extends AbstractMongoRepository {
 
+    private final MongoCollection<Room> roomCollection;
 
-    public static void createRoom(Room room) throws RuntimeException {
-
+    public RoomRepository() {
+        this.roomCollection = initDbConnection().getCollection("rooms", Room.class);
     }
 
-    public static List<Room> readAllRooms() {
+    public void insertRoom(Room room) {
+        roomCollection.insertOne(room);
+    }
+
+    public List<Room> readAllRooms() {
+        FindIterable<Room> rooms = roomCollection.find();
+        List<Room> roomList = new ArrayList<>();
+        rooms.into(roomList);
+        return roomList;
+    }
+
+    public Room readRoomByRoomNumber(int roomNumber) {
         return null;
     }
 
-    public static Room readRoomByRoomNumber(int roomNumber) {
-        return null;
-    }
-
-    public static void updateRoomPrice(int roomNumber, double newPrice) {
+    public void updateRoomPrice(int roomNumber, double newPrice) {
 
     }
 
-    public static void deleteRoom(int roomNumber) {
+    public void deleteRoom(int roomNumber) {
 
     }
 
-    public static boolean isRoomAvailable(long roomID) {
+    public boolean isRoomAvailable(long roomID) {
         return false;
     }
 }
