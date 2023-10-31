@@ -1,24 +1,15 @@
-package org.example;
+package pl.nbd.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
-@Access(AccessType.FIELD)
 public abstract class Client {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private long id;
     private String firstName;
     private String lastName;
 
-    @Column(unique = true)
     private String personalId;
     private boolean archived;
 
-    @Version
     private long version;
 
     public Client(String firstName, String lastName, String personalId) {

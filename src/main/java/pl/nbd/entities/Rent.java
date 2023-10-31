@@ -1,31 +1,18 @@
-package org.example;
+package pl.nbd.entities;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.NotFound;
-
-import java.util.Date;
 import java.util.GregorianCalendar;
 
-@Entity
-@Access(AccessType.FIELD)
 public class Rent {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long rentId;
     private double rentCost;
     private GregorianCalendar rentStartDate;
     private GregorianCalendar rentEndDate;
 
-    @Version
     private long version;
 
-    @ManyToOne
-    @JoinColumn
     private Client client;
 
-    @ManyToOne
-    @JoinColumn
     private Room room;
 
     public Rent(GregorianCalendar rentStartDate, Client client, Room room) {

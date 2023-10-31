@@ -1,14 +1,6 @@
-package org.example;
+package pl.nbd.entities;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-
-@Entity
-@Access(AccessType.FIELD)
-@DiscriminatorValue("premiumclient")
-public class PremiumClient extends Client{
+public class PremiumClient extends Client {
 
     private int membershipLevel;
     private double discount;

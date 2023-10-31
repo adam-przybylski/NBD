@@ -1,13 +1,7 @@
-package org.example;
+package pl.nbd.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Access(AccessType.FIELD)
 public class Room {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     public Room() {
@@ -22,24 +16,16 @@ public class Room {
         this.id = id;
     }
 
-    @Column(unique = true)
     private int roomNumber;
     private int roomCapacity;
     private double basePrice;
     private boolean available;
-
-    @Version
-    private int version;
 
     public Room(int roomNumber, int roomCapacity, double basePrice) {
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
         this.basePrice = basePrice;
         this.available = true;
-    }
-
-    public int getVersion() {
-        return version;
     }
 
     public int getRoomNumber() {

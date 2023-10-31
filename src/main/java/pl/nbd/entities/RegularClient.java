@@ -1,10 +1,5 @@
-package org.example;
+package pl.nbd.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Access(AccessType.FIELD)
-@DiscriminatorValue("regularclient")
 public class RegularClient extends Client {
 
     private double discount;

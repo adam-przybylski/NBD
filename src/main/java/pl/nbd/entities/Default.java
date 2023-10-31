@@ -1,13 +1,5 @@
-package org.example;
+package pl.nbd.entities;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-
-@Entity
-@Access(AccessType.FIELD)
-@DiscriminatorValue("default")
 public class Default extends Client {
 
     public Default(String firstName, String lastName, String personalId) {
