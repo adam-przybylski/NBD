@@ -15,14 +15,16 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import java.util.List;
 
 public abstract class AbstractMongoRepository implements AutoCloseable {
-    private static ConnectionString connectionString = new ConnectionString("mongodb://mongodb1:27017,mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single");
+    private static final ConnectionString connectionString = new ConnectionString("mongodb://mongodb1:27017,mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single");
 
-    private MongoCredential credential = MongoCredential.createCredential("admin", "admin", "adminpassword".toCharArray());
+    private final MongoCredential credential = MongoCredential.createCredential("admin", "admin", "adminpassword".toCharArray());
 
-    private CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(PojoCodecProvider.builder()
+    private final CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(PojoCodecProvider.builder()
             .automatic(true)
             .conventions(List.of(Conventions.ANNOTATION_CONVENTION))
             .build());
+
+    private final CodecRegistry codecRegistry = CodecRegistries.fromProviders(new MongoUUIDCodecProvider());
 
     private MongoClient mongoClient;
     private MongoDatabase db;
@@ -32,7 +34,10 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
                 .credential(credential)
                 .applyConnectionString(connectionString)
                 .uuidRepresentation(UuidRepresentation.STANDARD)
-                .codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry))
+                .codecRegistry(CodecRegistries.fromRegistries(
+                        codecRegistry,
+                        MongoClientSettings.getDefaultCodecRegistry(),
+                        pojoCodecRegistry))
                 .build();
 
         mongoClient = MongoClients.create(settings);
