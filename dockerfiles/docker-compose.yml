@@ -79,21 +79,7 @@ services:
         condition: service_healthy
       mongo_3:
         condition: service_healthy
-    command: >
-      mongosh --host mongodb1:27017 --username admin --password adminpassword --authenticationDatabase admin --eval
-      `
-      rs.initiate(
-        {
-          _id: "replica_set_single",
-          version: 1,
-          members: [
-            { _id: 0, host : "mongodb1:27017" },
-            { _id: 1, host : "mongodb2:27018" },
-            { _id: 2, host : "mongodb3:27019" }
-          ]
-        });
-       `
-
+    command: mongosh --host mongodb1 --port 27017 --username admin --password adminpassword --file /scripts/initReplicaSet.js
 networks:
   mongonet:
     driver: bridge
