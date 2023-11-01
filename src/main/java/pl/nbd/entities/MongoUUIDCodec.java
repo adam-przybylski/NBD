@@ -29,6 +29,10 @@ public class MongoUUIDCodec implements Codec<MongoUUID> {
         uuidCodec.encode(bsonWriter, mongoUUID.getUuid(), encoderContext);
     }
 
+    public Codec<UUID> getUuidCodec() {
+        return uuidCodec;
+    }
+
     @Override
     public Class<MongoUUID> getEncoderClass() {
         return MongoUUID.class;

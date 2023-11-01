@@ -18,6 +18,9 @@ public class Room implements Serializable {
     private double basePrice;
 
 
+    public Room() {
+    }
+
     public Room(int roomNumber,
                 int roomCapacity,
                 double basePrice) {
@@ -55,9 +58,13 @@ public class Room implements Serializable {
     }
 
 
+    public MongoUUID getId() {
+        return id;
+    }
+
     public String toString() {
         return "Room{" +
-                "id=" + id.toString() +
+                "id=" + id +
                 ", roomNumber=" + roomNumber +
                 ", roomCapacity=" + roomCapacity +
                 ", basePrice=" + basePrice +
