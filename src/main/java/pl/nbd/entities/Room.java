@@ -51,6 +51,17 @@ public class Room implements Serializable {
         return basePrice;
     }
 
+    public void setId(MongoUUID id) {
+        this.id = id;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public void setRoomCapacity(int roomCapacity) {
+        this.roomCapacity = roomCapacity;
+    }
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;

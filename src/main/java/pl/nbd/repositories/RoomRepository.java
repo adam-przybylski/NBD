@@ -2,10 +2,14 @@ package pl.nbd.repositories;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.conversions.Bson;
 import pl.nbd.entities.Room;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Filter;
 
 public class RoomRepository extends AbstractMongoRepository {
 
@@ -26,16 +30,15 @@ public class RoomRepository extends AbstractMongoRepository {
         return roomList;
     }
 
-    public Room readRoomByRoomNumber(int roomNumber) {
-        return null;
-    }
-
     public void updateRoomPrice(int roomNumber, double newPrice) {
-
+       Bson filter = Filters.eq("roomNumber", roomNumber);
+       Bson setUpdate = Updates.set("basePrice", newPrice);
+       roomCollection.updateOne(filter, setUpdate);
     }
 
     public void deleteRoom(int roomNumber) {
-
+        Bson filter = Filters.eq("roomNumber", roomNumber);
+        roomCollection.deleteOne(filter);
     }
 
     public boolean isRoomAvailable(long roomID) {

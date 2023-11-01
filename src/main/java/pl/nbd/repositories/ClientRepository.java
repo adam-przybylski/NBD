@@ -2,6 +2,7 @@ package pl.nbd.repositories;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import pl.nbd.entities.Client;
 import pl.nbd.entities.Default;
@@ -51,11 +52,9 @@ public class ClientRepository extends AbstractMongoRepository {
         return defaultClientCollection.find(filter).into(new ArrayList<>());
     }
 
-    public Client readRoomByRoomPersonalId(String personalId) {
-        return null;
-    }
-
-    public void updateLastName(String personalId, String newLastName) {
-
+    public void updateClient(String personalId, String lastName) {
+        Bson filter = Filters.eq("personalId", personalId);
+        Bson setUpdate = Updates.set("lastName", lastName);
+        clientCollection.updateOne(filter, setUpdate);
     }
 }
