@@ -1,8 +1,8 @@
 package pl.nbd.entities;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import pl.nbd.mappers.MongoUUID;
 
 import java.io.Serializable;
 
@@ -16,7 +16,6 @@ public class Room implements Serializable {
     private int roomCapacity;
     @BsonProperty("basePrice")
     private double basePrice;
-
 
     public Room() {
     }

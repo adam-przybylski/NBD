@@ -1,25 +1,21 @@
 package pl.nbd;
 
-import pl.nbd.entities.MongoUUID;
-import pl.nbd.entities.Room;
+import pl.nbd.entities.*;
+import pl.nbd.mappers.MongoUUID;
+import pl.nbd.repositories.ClientRepository;
 import pl.nbd.repositories.RoomRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class App {
     public static void main(String[] args) {
-        try (RoomRepository roomRepository = new RoomRepository()) {
-            Room room = new Room(new MongoUUID(UUID.randomUUID()), 1, 1, 100);
-            System.out.println(room);
-            roomRepository.insertRoom(room);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try (RoomRepository roomRepository = new RoomRepository()) {
-            List<Room> list = roomRepository.readAllRooms();
-            list.forEach(System.out::println);
+        try (ClientRepository clientRepository = new ClientRepository()) {
+            ArrayList<Client> clients = clientRepository.readAllClients();
+            for (Client client : clients) {
+                System.out.println(client);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

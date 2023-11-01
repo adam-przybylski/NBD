@@ -1,4 +1,4 @@
-package pl.nbd.entities;
+package pl.nbd.mappers;
 
 import org.bson.BsonReader;
 import org.bson.BsonWriter;

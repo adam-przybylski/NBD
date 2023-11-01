@@ -2,7 +2,6 @@ package pl.nbd.repositories;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import pl.nbd.entities.AbstractMongoRepository;
 import pl.nbd.entities.Room;
 
 import java.util.ArrayList;

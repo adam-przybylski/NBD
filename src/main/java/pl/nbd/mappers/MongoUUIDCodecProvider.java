@@ -1,4 +1,4 @@
-package pl.nbd.entities;
+package pl.nbd.mappers;
 
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecProvider;

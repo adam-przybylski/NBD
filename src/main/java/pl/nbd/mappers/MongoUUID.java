@@ -1,4 +1,4 @@
-package pl.nbd.entities;
+package pl.nbd.mappers;
 
 import java.util.UUID;
 
