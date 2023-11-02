@@ -11,6 +11,7 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import pl.nbd.mappers.GregorianCalendarCodecProvider;
 import pl.nbd.mappers.MongoUUIDCodecProvider;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
                 .uuidRepresentation(UuidRepresentation.STANDARD)
                 .codecRegistry(CodecRegistries.fromRegistries(
                         CodecRegistries.fromProviders(new MongoUUIDCodecProvider()),
+                        CodecRegistries.fromProviders(new GregorianCalendarCodecProvider()),
                         MongoClientSettings.getDefaultCodecRegistry(),
                         pojoCodecRegistry))
                 .build();

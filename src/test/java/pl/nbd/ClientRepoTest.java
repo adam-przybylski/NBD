@@ -76,6 +76,4 @@ public class ClientRepoTest {
         clientRepository.dropClientCollection();
         Assertions.assertEquals(clientRepository.readAllClients().size(), 0);
     }
-
-
 }
