@@ -4,6 +4,8 @@ import pl.nbd.entities.PremiumClient;
 import pl.nbd.entities.Rent;
 import pl.nbd.entities.Room;
 import pl.nbd.mappers.MongoUUID;
+import pl.nbd.mappers.ClientCodec;
+import pl.nbd.mappers.ClientProvider;
 import pl.nbd.repositories.ClientRepository;
 import pl.nbd.repositories.RentRepository;
 import pl.nbd.repositories.RoomRepository;
@@ -39,6 +41,8 @@ public class App {
             roomRepository.insertRoom(room1);
             rentRepository.insertRent(rent1);
             List<Rent> rents = rentRepository.readAllRents();
+            PremiumClient client = (PremiumClient) rents.get(0).getClient();
+            System.out.println(client);
             for (Rent rent : rents) {
                 System.out.println(rent);
             }

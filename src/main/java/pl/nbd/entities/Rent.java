@@ -117,4 +117,16 @@ public class Rent {
         rentCost = client.applyDiscount(rentDays() * room.getBasePrice());
     }
 
+    @Override
+    public String toString() {
+        return "Rent{" +
+                "rentId=" + rentId +
+                ", rentCost=" + rentCost +
+//                ", rentStartDate=" + rentStartDate.toString() +
+                ", client=" + client +
+                ", room=" + room +
+                '}';
+    }
+
 }
+

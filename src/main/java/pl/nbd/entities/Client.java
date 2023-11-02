@@ -73,4 +73,12 @@ public abstract class Client {
     public String toString() {
         return String.format("%s %s (%s)", firstName, lastName, personalId);
     }
+
+    public abstract void setDiscount(double discount);
+
+    public abstract void setMembershipLevel(int membershipLevel);
+
+    public abstract int getMembershipLevel();
+
+    public abstract double getDiscount();
 }

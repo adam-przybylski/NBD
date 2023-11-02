@@ -30,7 +30,11 @@ public class RentRepository extends AbstractMongoRepository {
     public void updateEndRentDate(Rent rent) {
         Bson filter = Filters.eq("_id", rent.getRentId());
         Bson setUpdate = Updates.set("rentEndDate", rent.getRentEndDate());
-        rentCollection.updateOne(filter, setUpdate);
+        Bson setUpdate2 = Updates.set("rentCost", rent.getRentCost());
+        List<Bson> updates = new ArrayList<>();
+        updates.add(setUpdate);
+        updates.add(setUpdate2);
+        rentCollection.updateOne(filter, updates);
     }
 
     public List<Rent> readRentsbyClient(Client client) {

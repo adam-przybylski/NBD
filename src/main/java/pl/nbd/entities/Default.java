@@ -41,4 +41,24 @@ public class Default extends Client {
                 '}';
     }
 
+    @Override
+    public void setDiscount(double discount) {
+
+    }
+
+    @Override
+    public void setMembershipLevel(int membershipLevel) {
+
+    }
+
+    @Override
+    public int getMembershipLevel() {
+        return 0;
+    }
+
+    @Override
+    public double getDiscount() {
+        return 0;
+    }
+
 }

@@ -29,13 +29,23 @@ public class RegularClient extends Client {
     public RegularClient() {
 
     }
-
+    @Override
     public double getDiscount() {
         return discount;
     }
-
+    @Override
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public void setMembershipLevel(int membershipLevel) {
+        
+    }
+
+    @Override
+    public int getMembershipLevel() {
+        return 0;
     }
 
     @Override

@@ -33,26 +33,27 @@ public class PremiumClient extends Client {
     public PremiumClient() {
 
     }
-
+    @Override
     public int getMembershipLevel() {
         return membershipLevel;
     }
 
+    @Override
     public void setMembershipLevel(int membershipLevel) {
         this.membershipLevel = membershipLevel;
     }
-
+    @Override
     public double getDiscount() {
         return discount;
     }
-
+    @Override
     public void setDiscount(double discount) {
         this.discount = discount;
     }
 
     @Override
     public double applyDiscount(double price) {
-        return this.discount / membershipLevel;
+        return  price * (this.discount - (membershipLevel * 0.1));
     }
 
     @Override
