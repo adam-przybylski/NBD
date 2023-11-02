@@ -34,6 +34,10 @@ public class ClientRepository extends AbstractMongoRepository {
         return allClients;
     }
 
+    public void dropClientCollection() {
+        clientCollection.drop();
+    }
+
     public ArrayList<Client> readPremiumClients() {
         MongoCollection<PremiumClient> premiumClientCollection = initDbConnection().getCollection("clients", PremiumClient.class);
         Bson filter = Filters.eq("_clazz", "PremiumClient");

@@ -41,6 +41,10 @@ public class RoomRepository extends AbstractMongoRepository {
         roomCollection.deleteOne(filter);
     }
 
+    public void dropRoomCollection() {
+        roomCollection.drop();
+    }
+
     public boolean isRoomAvailable(long roomID) {
         return false;
     }
