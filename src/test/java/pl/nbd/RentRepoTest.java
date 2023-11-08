@@ -24,7 +24,7 @@ public class RentRepoTest {
         rentRepository = new RentRepository();
         rentRepository.dropRentCollection();
         client = new PremiumClient(new MongoUUID(UUID.randomUUID()), "John", "Doe", "666", 2, 0.95);
-        room = new Room(new MongoUUID(UUID.randomUUID()), 1, 2, 100);
+        room = new Room(new MongoUUID(UUID.randomUUID()), 8, 2, 100);
         rent = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), client, room);
     }
 
@@ -92,5 +92,10 @@ public class RentRepoTest {
         Assertions.assertEquals(rentRepository.readAllRents().get(0).getRentCost(), 150);
     }
 
-
+    @Test
+    public void insertRentWithRoomAlreadyRentedTest() {
+        Rent rentSameRoom = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), client, room);
+        rentRepository.insertRent(rentSameRoom);
+        Assertions.assertThrows(IllegalStateException.class, () -> rentRepository.insertRent(rent));
+    }
 }

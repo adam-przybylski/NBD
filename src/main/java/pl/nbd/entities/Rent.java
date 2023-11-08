@@ -128,5 +128,13 @@ public class Rent {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Rent) {
+            Rent rent = (Rent) obj;
+            return rent.getRentId().equals(this.rentId);
+        }
+        return false;
+    }
 }
 

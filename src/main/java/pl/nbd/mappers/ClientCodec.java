@@ -31,7 +31,6 @@ public class ClientCodec implements Codec<Client> {
         while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
             String fieldName = reader.readName();
             if (fieldName.equals("_id")) {
-                // Handle decoding of the _id field using the MongoUUID codec
                 MongoUUID mongoUUID = uuidCodec.decode(reader, decoderContext);
                 document.put("_id", mongoUUID);
             } else {
@@ -40,7 +39,6 @@ public class ClientCodec implements Codec<Client> {
         }
         reader.readEndDocument();
 
-        // Determine the client type based on the "_clazz" field.
         String clazz = document.getString("_clazz");
         if (clazz != null) {
             if (clazz.equals("PremiumClient")) {
@@ -57,7 +55,6 @@ public class ClientCodec implements Codec<Client> {
             }
         }
 
-        // Set the properties of the client object
         client.setFirstName(document.getString("firstName"));
         client.setLastName(document.getString("lastName"));
         client.setPersonalId(document.getString("personalId"));
@@ -75,13 +72,13 @@ public class ClientCodec implements Codec<Client> {
         writer.writeString("personalId", value.getPersonalId());
 
         if (value instanceof PremiumClient) {
-            writer.writeDouble("discount", ((PremiumClient) value).getDiscount());
-            writer.writeInt32("membershipLevel", ((PremiumClient) value).getMembershipLevel());
+            writer.writeDouble("discount", (value).getDiscount());
+            writer.writeInt32("membershipLevel", (value).getMembershipLevel());
         } else if (value instanceof RegularClient) {
-            writer.writeDouble("discount", ((RegularClient) value).getDiscount());
+            writer.writeDouble("discount", (value).getDiscount());
         }
 
-        // Encode the _id field using your MongoUUID codec
+
         writer.writeName("_id");
         uuidCodec.encode(writer, value.getId(), encoderContext);
 
@@ -100,7 +97,7 @@ public class ClientCodec implements Codec<Client> {
             writer.writeInt32((int) value);
         } else if (value instanceof Double) {
             writer.writeDouble((double) value);
-        } // Add more type handling as needed
+        }
     }
 
     private Object readValue(BsonReader reader, DecoderContext decoderContext, String fieldName) {
