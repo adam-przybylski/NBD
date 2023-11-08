@@ -18,11 +18,17 @@ public class RentRepoTest {
     private static Rent rent;
 
     private static RentRepository rentRepository;
+    private static ClientRepository clientRepository;
+    private static RoomRepository roomRepository;
 
     @BeforeEach
     public void clearData() {
         rentRepository = new RentRepository();
         rentRepository.dropRentCollection();
+        clientRepository = new ClientRepository();
+        clientRepository.dropClientCollection();
+        roomRepository = new RoomRepository();
+        roomRepository.dropRoomCollection();
         client = new PremiumClient(new MongoUUID(UUID.randomUUID()), "John", "Doe", "666", 2, 0.95);
         room = new Room(new MongoUUID(UUID.randomUUID()), 8, 2, 100);
         rent = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), client, room);
@@ -97,5 +103,58 @@ public class RentRepoTest {
         Rent rentSameRoom = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), client, room);
         rentRepository.insertRent(rentSameRoom);
         Assertions.assertThrows(IllegalStateException.class, () -> rentRepository.insertRent(rent));
+    }
+    
+    @Test
+    public void insertRentWithRoomNotInDatabaseTest() {
+        Room roomNotInDatabase = new Room(new MongoUUID(UUID.randomUUID()), 1, 2, 100);
+        Rent rentNotInDatabase = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), client, roomNotInDatabase);
+        rentRepository.insertRent(rentNotInDatabase);
+        Assertions.assertEquals(rentRepository.readAllRents().size(), 1);
+        Assertions.assertEquals(roomRepository.readAllRooms().size(), 1);
+    }
+
+    @Test
+    public void insertRentWithClientNotInDatabaseTest() {
+        Client clientNotInDatabase = new PremiumClient(new MongoUUID(UUID.randomUUID()), "John", "Doe", "666", 2, 0.1);
+        Rent rentNotInDatabase = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), clientNotInDatabase, room);
+        rentRepository.insertRent(rentNotInDatabase);
+        Assertions.assertEquals(rentRepository.readAllRents().size(), 1);
+        Assertions.assertEquals(clientRepository.readAllClients().size(), 1);
+    }
+
+    @Test
+    public void insertRentWithClientAndRoomNotInDatabaseTest() {
+        Client clientNotInDatabase = new PremiumClient(new MongoUUID(UUID.randomUUID()), "John", "Doe", "666", 2, 0.1);
+        Room roomNotInDatabase = new Room(new MongoUUID(UUID.randomUUID()), 1, 2, 100);
+        Rent rentNotInDatabase = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), clientNotInDatabase, roomNotInDatabase);
+        rentRepository.insertRent(rentNotInDatabase);
+        Assertions.assertEquals(rentRepository.readAllRents().size(), 1);
+        Assertions.assertEquals(clientRepository.readAllClients().size(), 1);
+        Assertions.assertEquals(roomRepository.readAllRooms().size(), 1);
+    }
+
+    @Test
+    public void insertRentWithClientAndRoomInDatabaseTest() {
+        clientRepository.insertClient(client);
+        roomRepository.insertRoom(room);
+        rentRepository.insertRent(rent);
+        Assertions.assertEquals(rentRepository.readAllRents().size(), 1);
+        Assertions.assertEquals(clientRepository.readAllClients().size(), 1);
+        Assertions.assertEquals(roomRepository.readAllRooms().size(), 1);
+    }
+
+    @Test
+    public void insertRentWithTheSameClientInDatabase() {
+        clientRepository.insertClient(client);
+        rentRepository.insertRent(rent);
+        Assertions.assertEquals(rentRepository.readAllRents().size(), 1);
+        Assertions.assertEquals(clientRepository.readAllClients().size(), 1);
+        Assertions.assertEquals(roomRepository.readAllRooms().size(), 1);
+        Room roomNotInDatabase = new Room(new MongoUUID(UUID.randomUUID()), 1, 2, 100);
+        Rent rentSameClient = new Rent(new MongoUUID(UUID.randomUUID()), new GregorianCalendar(), client, roomNotInDatabase);
+        rentRepository.insertRent(rentSameClient);
+        Assertions.assertEquals(clientRepository.readAllClients().size(), 1);
+        Assertions.assertEquals(roomRepository.readAllRooms().size(), 2);
     }
 }

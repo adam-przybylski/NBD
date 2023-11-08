@@ -29,8 +29,21 @@ public class RentRepository extends AbstractMongoRepository {
     public void insertRent(Rent rent) throws IllegalStateException {
         try (ClientSession clientSession = mongoClient.startSession()) {
             try {
-                // If there is no client or room add them!
                 clientSession.startTransaction();
+
+                MongoCollection<Client> clientCollection = db
+                        .getCollection("clients", Client.class)
+                        .withWriteConcern(WriteConcern.MAJORITY);
+                if (clientCollection.find(Filters.eq("personalId", rent.getClient().getPersonalId())).first() == null) {
+                    clientCollection.insertOne(rent.getClient());
+                }
+
+                MongoCollection<Room> roomCollection = db
+                        .getCollection("rooms", Room.class)
+                        .withWriteConcern(WriteConcern.MAJORITY);
+                if(roomCollection.find(Filters.eq("roomNumber", rent.getRoom().getRoomNumber())).first() == null) {
+                    roomCollection.insertOne(rent.getRoom());
+                }
 
                 MongoCollection<Rent> rentCollection = db
                         .getCollection("rents", Rent.class)
@@ -38,7 +51,6 @@ public class RentRepository extends AbstractMongoRepository {
 
                 List<Rent> rents = rentCollection.find().into(new ArrayList<>());
 
-                // Now check if there is no rent with the same room and no end date
                 boolean roomAlreadyRented = rents.stream()
                         .anyMatch(rent1 -> (rent1.getRoom().getRoomNumber() == rent.getRoom().getRoomNumber()) && (rent1.getRentEndDate() == null));
 
