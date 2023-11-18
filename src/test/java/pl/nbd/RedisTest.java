@@ -14,11 +14,10 @@ import java.util.UUID;
 public class RedisTest {
     RoomRepository roomRepository = new RoomRepository();
     Jsonb jsonb = JsonbBuilder.create();
-    Room room = new Room(new MongoUUID(UUID.randomUUID()),666, 31, 12);
+    Room room = new Room(new MongoUUID(UUID.randomUUID()), 666, 31, 12);
 
     @Test
     public void insertRedisRoom() {
-
 
 
         roomRepository.insertRoom(room);
@@ -28,13 +27,13 @@ public class RedisTest {
     }
 
     @Test
-    public void test() {
-        Room room = new Room(new MongoUUID(UUID.randomUUID()),666, 31, 12);
-        System.out.println(room);
-        String json = jsonb.toJson(room);
-        System.out.println(json);
-        Room defaultClient1 = jsonb.fromJson(json, Room.class);
-        System.out.println(defaultClient1);
-    }
+    public void cacheRemoveOnClose() {
+        roomRepository.insertRoom(room);
+        roomRepository.close();
+        roomRepository.initRedisConnection();
 
+        Assertions.assertNull(roomRepository.readRoomByRoomNumberFromRedis(666));
+    }
 }
+
+

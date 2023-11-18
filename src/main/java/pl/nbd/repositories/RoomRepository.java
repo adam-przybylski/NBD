@@ -20,6 +20,7 @@ public class RoomRepository extends AbstractDatabaseRepository {
     public RoomRepository() {
         this.roomMongoCollection = initDbConnection().getCollection("rooms", Room.class);
         initRedisConnection();
+        restoreCashedRooms();
     }
 
     public void insertRoom(Room room) {
@@ -55,17 +56,12 @@ public class RoomRepository extends AbstractDatabaseRepository {
     public Room readRoomByRoomNumberFromRedis(int roomNumber) {
         String key = hashPrefix + roomNumber;
         if (!getPool().exists(key)) {
-            System.out.println("aaaaaaaaaaaa");
             return null;
         }
         Object json = getPool().jsonGet(key);
         String jsonRoom = jsonb.toJson(json);
         return jsonb.fromJson(jsonRoom, Room.class);
     }
-
-
-
-
 
 
     public void updateRoomPrice(int roomNumber, double newPrice) {
@@ -78,7 +74,7 @@ public class RoomRepository extends AbstractDatabaseRepository {
     public void deleteRoom(int roomNumber) {
         Bson filter = Filters.eq("roomNumber", roomNumber);
         roomMongoCollection.deleteOne(filter);
-        getPool().del(hashPrefix + roomNumber);
+        removeRoomFromCache(roomNumber);
     }
 
     public void dropRoomCollection() {
@@ -87,5 +83,20 @@ public class RoomRepository extends AbstractDatabaseRepository {
 
     public boolean isRoomAvailable(long roomID) {
         return false;
+    }
+
+    private void removeRoomFromCache(int roomNumber) {
+        getPool().del(hashPrefix + roomNumber);
+    }
+
+    public void clearCache() {
+        getPool().flushAll();
+    }
+
+    private void restoreCashedRooms() {
+        List<Room> rooms = readAllRooms();
+        for (Room room : rooms) {
+            insertRoomToRedis(room);
+        }
     }
 }
