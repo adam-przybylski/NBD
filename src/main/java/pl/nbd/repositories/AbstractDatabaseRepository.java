@@ -11,6 +11,7 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import pl.nbd.App;
 import pl.nbd.mappers.ClientProvider;
 import pl.nbd.mappers.GregorianCalendarCodecProvider;
 import pl.nbd.mappers.MongoUUIDCodecProvider;
@@ -22,6 +23,7 @@ import redis.clients.jedis.JedisPooled;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 public abstract class AbstractDatabaseRepository implements AutoCloseable {
@@ -68,10 +70,7 @@ public abstract class AbstractDatabaseRepository implements AutoCloseable {
     public void initRedisConnection() {
         try {
             Properties properties = new Properties();
-            String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-            System.out.println(rootPath);
-            String appConfigPath = rootPath + "redisConfig.properties";
-            properties.load(new FileInputStream(appConfigPath));
+            properties.load(App.class.getClassLoader().getResourceAsStream("redisConfig.properties"));
 
             String host = properties.getProperty("redis.host");
             int port = Integer.parseInt(properties.getProperty("redis.port"));

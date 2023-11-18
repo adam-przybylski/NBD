@@ -18,9 +18,23 @@ public class RedisTest {
 
     @Test
     public void insertRedisRoom() {
+
+
+
         roomRepository.insertRoom(room);
         Assertions.assertEquals(roomRepository.readRoomByRoomNumber(666).getRoomNumber(), 666);
-        Assertions.assertEquals(roomRepository.readRoomByRoomNumberFromRedis(666), jsonb.toJson(room));
-
+        Assertions.assertEquals(roomRepository.readRoomByRoomNumberFromRedis(666).getId().toString()
+                , room.getId().toString());
     }
+
+    @Test
+    public void test() {
+        Room room = new Room(new MongoUUID(UUID.randomUUID()),666, 31, 12);
+        System.out.println(room);
+        String json = jsonb.toJson(room);
+        System.out.println(json);
+        Room defaultClient1 = jsonb.fromJson(json, Room.class);
+        System.out.println(defaultClient1);
+    }
+
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RoomRepository extends AbstractDatabaseRepository {
     private final String hashPrefix = "room:";
-    private Jsonb jsonb = JsonbBuilder.create();
+    private final Jsonb jsonb = JsonbBuilder.create();
     private final MongoCollection<Room> roomMongoCollection;
 
     public RoomRepository() {
@@ -28,9 +28,8 @@ public class RoomRepository extends AbstractDatabaseRepository {
     }
 
     public void insertRoomToRedis(Room room) {
-        int roomNumber = room.getRoomNumber();
         String json = jsonb.toJson(room);
-        getPool().jsonSet(hashPrefix + roomNumber,  json);
+        getPool().jsonSet(hashPrefix + room.getRoomNumber(),  json);
     }
 
     public List<Room> readAllRooms() {
@@ -41,7 +40,7 @@ public class RoomRepository extends AbstractDatabaseRepository {
     }
 
     public Room readRoomByRoomNumber(int roomNumber) {
-        String jsonRoom = readRoomByRoomNumberFromRedis(roomNumber);
+        Room jsonRoom = readRoomByRoomNumberFromRedis(roomNumber);
         if (jsonRoom == null) {
             Room room = roomMongoCollection.find(Filters.eq("roomNumber", roomNumber)).first();
             if(room != null) {
@@ -50,12 +49,22 @@ public class RoomRepository extends AbstractDatabaseRepository {
             }
             return null;
         }
+        return jsonRoom;
+    }
+
+    public Room readRoomByRoomNumberFromRedis(int roomNumber) {
+        String key = hashPrefix + roomNumber;
+        if (!getPool().exists(key)) {
+            System.out.println("aaaaaaaaaaaa");
+            return null;
+        }
+        Object json = getPool().jsonGet(key);
+        String jsonRoom = jsonb.toJson(json);
         return jsonb.fromJson(jsonRoom, Room.class);
     }
 
-    public String readRoomByRoomNumberFromRedis(int roomNumber) {
-        return getPool().get(hashPrefix + roomNumber);
-    }
+
+
 
 
 
