@@ -11,7 +11,7 @@ import pl.nbd.entities.RegularClient;
 
 import java.util.ArrayList;
 
-public class ClientRepository extends AbstractMongoRepository {
+public class ClientRepository extends AbstractDatabaseRepository {
 
     private final MongoCollection<Client> clientCollection;
 

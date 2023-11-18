@@ -4,45 +4,76 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import org.bson.conversions.Bson;
 import pl.nbd.entities.Room;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Filter;
 
-public class RoomRepository extends AbstractMongoRepository {
-
-    private final MongoCollection<Room> roomCollection;
+public class RoomRepository extends AbstractDatabaseRepository {
+    private final String hashPrefix = "room:";
+    private Jsonb jsonb = JsonbBuilder.create();
+    private final MongoCollection<Room> roomMongoCollection;
 
     public RoomRepository() {
-        this.roomCollection = initDbConnection().getCollection("rooms", Room.class);
+        this.roomMongoCollection = initDbConnection().getCollection("rooms", Room.class);
+        initRedisConnection();
     }
 
     public void insertRoom(Room room) {
-        roomCollection.insertOne(room);
+        roomMongoCollection.insertOne(room);
+        insertRoomToRedis(room);
+    }
+
+    public void insertRoomToRedis(Room room) {
+        int roomNumber = room.getRoomNumber();
+        String json = jsonb.toJson(room);
+        getPool().jsonSet(hashPrefix + roomNumber,  json);
     }
 
     public List<Room> readAllRooms() {
-        FindIterable<Room> rooms = roomCollection.find();
+        FindIterable<Room> rooms = roomMongoCollection.find();
         List<Room> roomList = new ArrayList<>();
         rooms.into(roomList);
         return roomList;
     }
 
+    public Room readRoomByRoomNumber(int roomNumber) {
+        String jsonRoom = readRoomByRoomNumberFromRedis(roomNumber);
+        if (jsonRoom == null) {
+            Room room = roomMongoCollection.find(Filters.eq("roomNumber", roomNumber)).first();
+            if(room != null) {
+                insertRoomToRedis(room);
+                return room;
+            }
+            return null;
+        }
+        return jsonb.fromJson(jsonRoom, Room.class);
+    }
+
+    public String readRoomByRoomNumberFromRedis(int roomNumber) {
+        return getPool().get(hashPrefix + roomNumber);
+    }
+
+
+
     public void updateRoomPrice(int roomNumber, double newPrice) {
        Bson filter = Filters.eq("roomNumber", roomNumber);
        Bson setUpdate = Updates.set("basePrice", newPrice);
-       roomCollection.updateOne(filter, setUpdate);
+       roomMongoCollection.updateOne(filter, setUpdate);
+       getPool().jsonSet(hashPrefix + roomNumber, jsonb.toJson(readRoomByRoomNumber(roomNumber)));
     }
 
     public void deleteRoom(int roomNumber) {
         Bson filter = Filters.eq("roomNumber", roomNumber);
-        roomCollection.deleteOne(filter);
+        roomMongoCollection.deleteOne(filter);
+        getPool().del(hashPrefix + roomNumber);
     }
 
     public void dropRoomCollection() {
-        roomCollection.drop();
+        roomMongoCollection.drop();
     }
 
     public boolean isRoomAvailable(long roomID) {

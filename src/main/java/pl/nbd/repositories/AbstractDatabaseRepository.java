@@ -14,13 +14,23 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import pl.nbd.mappers.ClientProvider;
 import pl.nbd.mappers.GregorianCalendarCodecProvider;
 import pl.nbd.mappers.MongoUUIDCodecProvider;
+import redis.clients.jedis.DefaultJedisClientConfig;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisClientConfig;
+import redis.clients.jedis.JedisPooled;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
-public abstract class AbstractMongoRepository implements AutoCloseable {
+public abstract class AbstractDatabaseRepository implements AutoCloseable {
     private static final ConnectionString connectionString = new ConnectionString("mongodb://mongodb1:27017,mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single");
 
     private final MongoCredential credential = MongoCredential.createCredential("admin", "admin", "adminpassword".toCharArray());
+
+    private static JedisPooled pool;
+
 
     private CodecRegistry codecRegistry = CodecRegistries.fromRegistries(
             CodecRegistries.fromProviders(new MongoUUIDCodecProvider()),
@@ -49,6 +59,29 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
 
         mongoClient = MongoClients.create(settings);
         return db = mongoClient.getDatabase("rentaroom");
+    }
+
+    public static JedisPooled getPool() {
+        return pool;
+    }
+
+    public void initRedisConnection() {
+        try {
+            Properties properties = new Properties();
+            String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+            System.out.println(rootPath);
+            String appConfigPath = rootPath + "redisConfig.properties";
+            properties.load(new FileInputStream(appConfigPath));
+
+            String host = properties.getProperty("redis.host");
+            int port = Integer.parseInt(properties.getProperty("redis.port"));
+
+            JedisClientConfig clientConfig = DefaultJedisClientConfig.builder().build();
+
+            pool = new JedisPooled(new HostAndPort(host, port), clientConfig);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void close() {
