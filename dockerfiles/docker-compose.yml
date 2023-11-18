@@ -80,6 +80,25 @@ services:
       mongo_3:
         condition: service_healthy
     command: mongosh --host mongodb1 --port 27017 --username admin --password adminpassword --file /scripts/initReplicaSet.js
+
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: redis
+    hostname: redis
+    volumes:
+      - redis-stack-data:/bitnami/redis/data
+    networks:
+      - redisnet
+    ports:
+      - "8001:8001"
+      - "6379:6379"
+
+volumes:
+  redis-stack-data:
+    driver: local
+
 networks:
   mongonet:
     driver: bridge
+  redisnet: {}
+

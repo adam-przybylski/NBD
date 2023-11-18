@@ -1,13 +1,16 @@
 package pl.nbd.entities;
 
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import pl.nbd.mappers.MongoUUID;
+import pl.nbd.mappers.MongoUUIDAdapter;
 
 import java.util.GregorianCalendar;
 
 public class Rent {
 
+    @JsonbTypeAdapter(MongoUUIDAdapter.class)
     @BsonProperty("_id")
     private MongoUUID rentId;
 

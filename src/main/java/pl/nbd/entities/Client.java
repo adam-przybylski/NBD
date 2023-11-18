@@ -1,11 +1,13 @@
 package pl.nbd.entities;
 
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import pl.nbd.mappers.MongoUUID;
+import pl.nbd.mappers.MongoUUIDAdapter;
 
 public abstract class Client {
 
-
+    @JsonbTypeAdapter(MongoUUIDAdapter.class)
     @BsonProperty("_id")
     private MongoUUID id;
 

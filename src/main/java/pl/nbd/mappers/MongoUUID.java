@@ -6,6 +6,7 @@ public class MongoUUID {
 
     private UUID uuid;
 
+
     public MongoUUID(UUID uuid) {
         this.uuid = uuid;
     }
@@ -18,4 +19,6 @@ public class MongoUUID {
     public String toString() {
         return uuid.toString();
     }
+
+
 }
