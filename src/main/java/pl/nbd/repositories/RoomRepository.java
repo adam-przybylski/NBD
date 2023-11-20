@@ -20,7 +20,7 @@ public class RoomRepository extends AbstractDatabaseRepository {
     public RoomRepository() {
         this.roomMongoCollection = initDbConnection().getCollection("rooms", Room.class);
         initRedisConnection();
-        restoreCashedRooms();
+        //restoreCashedRooms();
     }
 
     public void insertRoom(Room room) {
@@ -43,7 +43,7 @@ public class RoomRepository extends AbstractDatabaseRepository {
     public Room readRoomByRoomNumber(int roomNumber) {
         Room jsonRoom = readRoomByRoomNumberFromRedis(roomNumber);
         if (jsonRoom == null) {
-            Room room = roomMongoCollection.find(Filters.eq("roomNumber", roomNumber)).first();
+            Room room = readRoomByRoomNumberFromMongo(roomNumber);
             if(room != null) {
                 insertRoomToRedis(room);
                 return room;
@@ -98,5 +98,9 @@ public class RoomRepository extends AbstractDatabaseRepository {
         for (Room room : rooms) {
             insertRoomToRedis(room);
         }
+    }
+
+    public Room readRoomByRoomNumberFromMongo(int roomNumber) {
+        return roomMongoCollection.find(Filters.eq("roomNumber", roomNumber)).first();
     }
 }
