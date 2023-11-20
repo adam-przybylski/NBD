@@ -1,6 +1,9 @@
 package pl.nbd;
 
-import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
@@ -24,13 +27,11 @@ public class DbBenchmark {
     }
 
     @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
     public void mongoReadBenchmark() {
         roomRepository.readRoomByRoomNumberFromMongo(667);
     }
 
     @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
     public void redisReadBenchmark() {
         roomRepository.readRoomByRoomNumberFromRedis(667);
     }
