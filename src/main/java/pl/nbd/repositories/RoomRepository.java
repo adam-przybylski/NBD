@@ -63,7 +63,6 @@ public class RoomRepository extends AbstractDatabaseRepository {
         return jsonb.fromJson(jsonRoom, Room.class);
     }
 
-
     public void updateRoomPrice(int roomNumber, double newPrice) {
        Bson filter = Filters.eq("roomNumber", roomNumber);
        Bson setUpdate = Updates.set("basePrice", newPrice);

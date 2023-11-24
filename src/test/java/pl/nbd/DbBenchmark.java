@@ -21,19 +21,27 @@ public class DbBenchmark {
     @Setup
     public void setup() {
         // Initialize the repository only once
+
         roomRepository = new RoomRepository();
-        Room room = new Room(new MongoUUID(UUID.randomUUID()), 667, 31, 12);
-        roomRepository.insertRoom(room);
+        for(int i = 800; i <= 1200; i++){
+            roomRepository.insertRoom(new Room(new MongoUUID(UUID.randomUUID()), i, 31, 12));
+        }
     }
 
     @Benchmark
     public void mongoReadBenchmark() {
-        roomRepository.readRoomByRoomNumberFromMongo(667);
+//        roomRepository.readRoomByRoomNumberFromMongo(667);
+        for (int i = 800; i <= 1200; i++) {
+            roomRepository.readRoomByRoomNumberFromMongo(i);
+        }
     }
 
     @Benchmark
     public void redisReadBenchmark() {
-        roomRepository.readRoomByRoomNumberFromRedis(667);
+//        roomRepository.readRoomByRoomNumberFromRedis(667);
+        for (int i = 800; i <= 1200; i++) {
+            roomRepository.readRoomByRoomNumberFromRedis(i);
+        }
     }
 
     public static void main(String[] args) throws RunnerException {
