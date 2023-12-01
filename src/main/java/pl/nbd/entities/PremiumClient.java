@@ -2,15 +2,13 @@ package pl.nbd.entities;
 
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.nbd.mappers.MongoUUID;
 
-@BsonDiscriminator(key = "_clazz", value = "PremiumClient")
+import java.util.UUID;
+
 public class PremiumClient extends Client {
 
-    @BsonProperty("membershipLevel")
     private int membershipLevel;
 
-    @BsonProperty("discount")
     private double discount;
 
     public PremiumClient(String firstName, String lastName, String personalId, int membershipLevel, double discount) {
@@ -19,12 +17,12 @@ public class PremiumClient extends Client {
         this.discount = discount;
     }
 
-    public PremiumClient(@BsonProperty("id") MongoUUID id,
-                         @BsonProperty("firstName") String firstName,
-                         @BsonProperty("lastName") String lastName,
-                         @BsonProperty("personalId") String personalId,
-                         @BsonProperty("membershipLevel") int membershipLevel,
-                         @BsonProperty("discount") double discount) {
+    public PremiumClient(UUID id,
+                          String firstName,
+                        String lastName,
+                       String personalId,
+                       int membershipLevel,
+                    double discount) {
         super(id, firstName, lastName, personalId);
         this.membershipLevel = membershipLevel;
         this.discount = discount;

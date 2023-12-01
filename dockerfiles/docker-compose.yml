@@ -1,104 +1,62 @@
 version: '3.8'
 services:
-  mongo_1:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      image: mongo:6-jammy
-      container_name: mongodb1
-      hostname: mongodb1
-      networks:
-        - mongonet
-      ports:
-        - "27017:27017"
-      environment:
-         - MONGO_INITDB_ROOT_USERNAME=admin
-         - MONGO_INITDB_ROOT_PASSWORD=adminpassword
-      command: --config /etc/mongod.conf --port 27017 --replSet replica_set_single
-      healthcheck:
-        test: [ "CMD", "mongosh", "--port", "27017","--eval", "db.adminCommand('ping')" ]
-        interval: 10s
-        timeout: 2s
-        retries: 5
-
-  mongo_2:
-        build:
-          context: .
-          dockerfile: Dockerfile
-        image: mongo:6-jammy
-        container_name: mongodb2
-        hostname: mongodb2
-        networks:
-            - mongonet
-        ports:
-            - "27018:27018"
-        environment:
-          - MONGO_INITDB_ROOT_USERNAME=admin
-          - MONGO_INITDB_ROOT_PASSWORD=adminpassword
-        command: --config /etc/mongod.conf --port 27018 --replSet replica_set_single
-        healthcheck:
-            test: [ "CMD", "mongosh", "--port", "27018","--eval", "db.adminCommand('ping')" ]
-            interval: 10s
-            timeout: 2s
-            retries: 5
-
-  mongo_3:
-        build:
-          context: .
-          dockerfile: Dockerfile
-        image: mongo:6-jammy
-        container_name: mongodb3
-        hostname: mongodb3
-        networks:
-            - mongonet
-        ports:
-            - "27019:27019"
-        environment:
-          - MONGO_INITDB_ROOT_USERNAME=admin
-          - MONGO_INITDB_ROOT_PASSWORD=adminpassword
-        command: --config /etc/mongod.conf --port 27019 --replSet replica_set_single
-        healthcheck:
-            test: [ "CMD", "mongosh", "--port", "27019","--eval", "db.adminCommand('ping')" ]
-            interval: 10s
-            timeout: 2s
-            retries: 5
-
-  mongoinit:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: mongo:6-jammy
-    hostname: mongodbinit
-    container_name: mongodbinit
-    networks:
-      - mongonet
-    depends_on:
-      mongo_1:
-        condition: service_healthy
-      mongo_2:
-        condition: service_healthy
-      mongo_3:
-        condition: service_healthy
-    command: mongosh --host mongodb1 --port 27017 --username admin --password adminpassword --file /scripts/initReplicaSet.js
-
-  redis-stack:
-    image: redis/redis-stack:latest
-    container_name: redis
-    hostname: redis
-    volumes:
-      - redis-stack-data:/bitnami/redis/data
-    networks:
-      - redisnet
+  cassandra1:
+    image: docker.io/bitnami/cassandra:latest
+    hostname: cassandra1
     ports:
-      - "8001:8001"
-      - "6379:6379"
+      - 7000:7000
+      - 9042:9042
+    volumes:
+      - cassandra1_data:/bitnami
+    networks:
+      cassandranet:
+        ipv4_address: 172.24.0.101
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=cassandra1
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra1
+      - CASSANDRA_SEEDS=cassandra1,cassandra2
+      - CASSANDRA_CLUSTER_NAME=nbd-cassandra-cluster
+      - CASSANDRA_DATACENTER=dc1
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_USER = cassandra
+      - CASSANDRA_PASSWORD = cassandrapassword
+      - MAX_HEAP_SIZE=2G
+      - HEAP_NEWSIZE=200M
+  cassandra2:
+    image: docker.io/bitnami/cassandra:latest
+    hostname: cassandra2
+    ports:
+      - 7001:7000
+      - 9043:9042
+    volumes:
+      - cassandra2_data:/bitnami
+    networks:
+      cassandranet:
+        ipv4_address: 172.24.0.102
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=cassandra2
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra2
+      - CASSANDRA_SEEDS=cassandra1,cassandra2
+      - CASSANDRA_CLUSTER_NAME=nbd-cassandra-cluster
+      - CASSANDRA_DATACENTER=dc1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_USER = cassandra
+      - CASSANDRA_PASSWORD = cassandrapassword
+      - MAX_HEAP_SIZE=2G
+      - HEAP_NEWSIZE=200M
+
 
 volumes:
-  redis-stack-data:
+  cassandra1_data:
+    driver: local
+  cassandra2_data:
     driver: local
 
 networks:
-  mongonet:
+  cassandranet:
     driver: bridge
-  redisnet: {}
-
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.24.0.0/16

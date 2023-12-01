@@ -1,23 +1,21 @@
 package pl.nbd.entities;
 
-import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.nbd.mappers.MongoUUID;
-import pl.nbd.mappers.MongoUUIDAdapter;
+
+import java.util.UUID;
 
 public abstract class Client {
 
-    @JsonbTypeAdapter(MongoUUIDAdapter.class)
-    @BsonProperty("_id")
-    private MongoUUID id;
 
-    @BsonProperty("firstName")
+    private UUID id;
+
+
     private String firstName;
 
-    @BsonProperty("lastName")
+
     private String lastName;
 
-    @BsonProperty("personalId")
+
     private String personalId;
 
 
@@ -27,7 +25,7 @@ public abstract class Client {
         this.personalId = personalId;
     }
 
-    public Client(MongoUUID id, String firstName, String lastName, String personalId) {
+    public Client(UUID id, String firstName, String lastName, String personalId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,11 +36,11 @@ public abstract class Client {
 
     }
 
-    public MongoUUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(MongoUUID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

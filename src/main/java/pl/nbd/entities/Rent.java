@@ -3,46 +3,39 @@ package pl.nbd.entities;
 import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.nbd.mappers.MongoUUID;
-import pl.nbd.mappers.MongoUUIDAdapter;
 
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 public class Rent {
 
-    @JsonbTypeAdapter(MongoUUIDAdapter.class)
-    @BsonProperty("_id")
-    private MongoUUID rentId;
 
-    @BsonProperty("rentCost")
+    private UUID rentId;
+
     private double rentCost;
 
-    @BsonProperty("rentStartDate")
     private GregorianCalendar rentStartDate;
 
-    @BsonProperty("rentEndDate")
     private GregorianCalendar rentEndDate;
 
-    @BsonProperty("client")
     private Client client;
 
-    @BsonProperty("room")
     private Room room;
 
-    public Rent(MongoUUID uuid, GregorianCalendar rentStartDate, Client client, Room room) {
+    public Rent(UUID uuid, GregorianCalendar rentStartDate, Client client, Room room) {
         this.rentId = uuid;
         this.rentStartDate = rentStartDate;
         this.client = client;
         this.room = room;
     }
 
-    @BsonCreator
-    public Rent(@BsonProperty("_id") MongoUUID rentId,
-                @BsonProperty("rentCost") double rentCost,
-                @BsonProperty("rentStartDate") GregorianCalendar rentStartDate,
-                @BsonProperty("rentEndDate") GregorianCalendar rentEndDate,
-                @BsonProperty("client") Client client,
-                @BsonProperty("room") Room room) {
+
+    public Rent(UUID rentId,
+                double rentCost,
+                GregorianCalendar rentStartDate,
+                GregorianCalendar rentEndDate,
+                Client client,
+                Room room) {
         this.rentId = rentId;
         this.rentCost = rentCost;
         this.rentStartDate = rentStartDate;
@@ -54,11 +47,11 @@ public class Rent {
     public Rent() {
     }
 
-    public MongoUUID getRentId() {
+    public UUID getRentId() {
         return rentId;
     }
 
-    public void setRentId(MongoUUID rentId) {
+    public void setRentId(UUID rentId) {
         this.rentId = rentId;
     }
 

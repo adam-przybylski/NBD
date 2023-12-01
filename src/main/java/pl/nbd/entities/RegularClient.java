@@ -3,12 +3,11 @@ package pl.nbd.entities;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.nbd.mappers.MongoUUID;
 
-@BsonDiscriminator(key = "_clazz", value = "RegularClient")
+import java.util.UUID;
+
 public class RegularClient extends Client {
 
-    @BsonProperty("discount")
     private double discount;
 
     public RegularClient(String firstName, String lastName, String personalId, double discount) {
@@ -16,12 +15,11 @@ public class RegularClient extends Client {
         this.discount = discount;
     }
 
-    @BsonCreator
-    public RegularClient(@BsonProperty("id") MongoUUID id,
-                         @BsonProperty("firstName") String firstName,
-                         @BsonProperty("lastName") String lastName,
-                         @BsonProperty("personalId") String personalId,
-                         @BsonProperty("discount") double discount) {
+    public RegularClient(UUID id,
+                         String firstName,
+                         String lastName,
+                         String personalId,
+                         double discount) {
         super(id, firstName, lastName, personalId);
         this.discount = discount;
     }
@@ -29,10 +27,12 @@ public class RegularClient extends Client {
     public RegularClient() {
 
     }
+
     @Override
     public double getDiscount() {
         return discount;
     }
+
     @Override
     public void setDiscount(double discount) {
         this.discount = discount;
@@ -40,7 +40,7 @@ public class RegularClient extends Client {
 
     @Override
     public void setMembershipLevel(int membershipLevel) {
-        
+
     }
 
     @Override

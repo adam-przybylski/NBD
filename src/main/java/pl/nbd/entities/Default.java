@@ -3,10 +3,10 @@ package pl.nbd.entities;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.nbd.mappers.MongoUUID;
+
+import java.util.UUID;
 
 
-@BsonDiscriminator(key = "_clazz", value = "Default")
 public class Default extends Client {
 
     public Default(String firstName, String lastName, String personalId) {
@@ -14,11 +14,10 @@ public class Default extends Client {
     }
 
 
-    @BsonCreator
-    public Default(@BsonProperty("id") MongoUUID id,
-                   @BsonProperty("firstName") String firstName,
-                   @BsonProperty("lastName") String lastName,
-                   @BsonProperty("personalId") String personalId) {
+    public Default(UUID id,
+                   String firstName,
+                   String lastName,
+                   String personalId) {
         super(id, firstName, lastName, personalId);
     }
 
