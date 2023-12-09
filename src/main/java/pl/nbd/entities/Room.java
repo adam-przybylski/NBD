@@ -1,20 +1,29 @@
 package pl.nbd.entities;
 
-import jakarta.json.bind.annotation.JsonbTypeAdapter;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
+import com.datastax.oss.driver.api.mapper.annotations.*;
 
 import java.io.Serializable;
+import java.util.UUID;
 
+import static com.datastax.oss.driver.api.mapper.entity.naming.NamingConvention.UPPER_SNAKE_CASE;
+
+@Entity(defaultKeyspace = "rent_a_room")
+@NamingStrategy(convention = UPPER_SNAKE_CASE)
+@CqlName("rooms")
 public class Room implements Serializable {
-    @JsonbTypeAdapter(MongoUUIDAdapter.class)
-    @BsonProperty("_id")
-    private MongoUUID id;
-    @BsonProperty("roomNumber")
+
+    @PartitionKey
+    @CqlName("id")
+    private UUID id;
+
+    @CqlName("room_number")
     private int roomNumber;
-    @BsonProperty("roomCapacity")
+
+    @ClusteringColumn
+    @CqlName("room_capacity")
     private int roomCapacity;
-    @BsonProperty("basePrice")
+
+    @CqlName("base_price")
     private double basePrice;
 
     public Room() {
@@ -28,48 +37,47 @@ public class Room implements Serializable {
         this.basePrice = basePrice;
     }
 
-    @BsonCreator
-    public Room(@BsonProperty("_id") MongoUUID id,
-                @BsonProperty("roomNumber") int roomNumber,
-                @BsonProperty("roomCapacity") int roomCapacity,
-                @BsonProperty("basePrice") double basePrice) {
+
+    public Room(UUID id,
+                int roomNumber,
+                 int roomCapacity,
+                double basePrice) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
         this.basePrice = basePrice;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public int getRoomCapacity() {
-        return roomCapacity;
-    }
-
-    public double getBasePrice() {
-        return basePrice;
-    }
-
-    public void setId(MongoUUID id) {
-        this.id = id;
-    }
-
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public int getRoomCapacity() {
+        return roomCapacity;
     }
 
     public void setRoomCapacity(int roomCapacity) {
         this.roomCapacity = roomCapacity;
     }
 
-    public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
+    public double getBasePrice() {
+        return basePrice;
     }
 
-
-    public MongoUUID getId() {
-        return id;
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
     }
 
     public String toString() {
