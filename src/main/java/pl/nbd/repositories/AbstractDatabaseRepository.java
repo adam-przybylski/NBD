@@ -20,7 +20,7 @@ public abstract class AbstractDatabaseRepository implements AutoCloseable {
                 .addContactPoint(new InetSocketAddress("cassandra2", 9043))
                 .withLocalDatacenter("dc1")
                 .withAuthCredentials("cassandra", "cassandrapassword")
-                .withKeyspace(CqlIdentifier.fromCql("rent_a_room"))
+                .withKeyspace(CqlIdentifier.fromCql("rent_a_room")) //to zakomentuj za 1 razem a pozniej odkomentuj juz za 2 razem i do konca
                 .build();
         CreateKeyspace keyspace = createKeyspace(CqlIdentifier.fromCql("rent_a_room"))
                 .ifNotExists()
