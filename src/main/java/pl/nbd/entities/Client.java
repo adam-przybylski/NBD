@@ -1,23 +1,45 @@
 package pl.nbd.entities;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
+import com.datastax.oss.driver.api.mapper.annotations.*;
 
 import java.util.UUID;
 
-public abstract class Client {
+@Entity(defaultKeyspace = "rent_a_room")
+@CqlName("clients")
+@PropertyStrategy(mutable = false)
+public class Client {
 
-
+    @PartitionKey
+    @CqlName("id")
     private UUID id;
 
 
+    @CqlName("first_name")
     private String firstName;
 
-
+    @CqlName("last_name")
     private String lastName;
 
 
+    @CqlName("personal_id")
     private String personalId;
 
+
+    private String discriminator;
+
+    public Client(java.util.UUID id, java.lang.String firstName, java.lang.String lastName, java.lang.String personalId, java.lang.String discriminator) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalId = personalId;
+        this.discriminator = discriminator;
+    }
+    Client(java.util.UUID id, java.lang.String firstName, java.lang.String lastName, java.lang.String personalId, int membershipLevel, double discount) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalId = personalId;
+    }
 
     public Client(String firstName, String lastName, String personalId) {
         this.firstName = firstName;
@@ -35,6 +57,7 @@ public abstract class Client {
     public Client() {
 
     }
+
 
     public UUID getId() {
         return id;
@@ -68,17 +91,19 @@ public abstract class Client {
         this.personalId = personalId;
     }
 
-    abstract double applyDiscount(double price);
-
     public String toString() {
         return String.format("%s %s (%s)", firstName, lastName, personalId);
     }
 
-    public abstract void setDiscount(double discount);
+    public double applyDiscount(double v) {
+        return 2;
+    }
 
-    public abstract void setMembershipLevel(int membershipLevel);
+    public String getDiscriminator() {
+        return discriminator;
+    }
 
-    public abstract int getMembershipLevel();
-
-    public abstract double getDiscount();
+    public void setDiscriminator(String discriminator) {
+        this.discriminator = discriminator;
+    }
 }
