@@ -96,7 +96,7 @@ public class Client {
     }
 
     public double applyDiscount(double v) {
-        return 2;
+        return v;
     }
 
     public String getDiscriminator() {
