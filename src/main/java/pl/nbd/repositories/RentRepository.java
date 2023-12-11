@@ -35,12 +35,12 @@ public class RentRepository extends AbstractDatabaseRepository {
                 SchemaBuilder.createTable(CqlIdentifier.fromCql("rents_by_client"))
                         .ifNotExists()
                         .withPartitionKey(CqlIdentifier.fromCql("client_id"), DataTypes.UUID)
-                        .withClusteringColumn(CqlIdentifier.fromCql("rent_start_date"), DataTypes.TIMESTAMP)
+                        .withColumn(CqlIdentifier.fromCql("rent_start_date"), DataTypes.TIMESTAMP)
                         .withClusteringColumn(CqlIdentifier.fromCql("rent_id"), DataTypes.UUID)
                         .withColumn(CqlIdentifier.fromCql("rent_cost"), DataTypes.DOUBLE)
                         .withColumn(CqlIdentifier.fromCql("rent_end_date"), DataTypes.TIMESTAMP)
                         .withColumn(CqlIdentifier.fromCql("room_id"), DataTypes.UUID)
-                        .withClusteringOrder(CqlIdentifier.fromCql("rent_start_date"), ClusteringOrder.ASC)
+                        .withClusteringOrder(CqlIdentifier.fromCql("rent_id"), ClusteringOrder.ASC)
                         .build();
         getSession().execute(createRentsByClient);
 
@@ -48,12 +48,12 @@ public class RentRepository extends AbstractDatabaseRepository {
                 SchemaBuilder.createTable(CqlIdentifier.fromCql("rents_by_room"))
                         .ifNotExists()
                         .withPartitionKey(CqlIdentifier.fromCql("room_id"), DataTypes.UUID)
-                        .withClusteringColumn(CqlIdentifier.fromCql("rent_start_date"), DataTypes.TIMESTAMP)
+                        .withColumn(CqlIdentifier.fromCql("rent_start_date"), DataTypes.TIMESTAMP)
                         .withClusteringColumn(CqlIdentifier.fromCql("rent_id"), DataTypes.UUID)
                         .withColumn(CqlIdentifier.fromCql("rent_cost"), DataTypes.DOUBLE)
                         .withColumn(CqlIdentifier.fromCql("rent_end_date"), DataTypes.TIMESTAMP)
                         .withColumn(CqlIdentifier.fromCql("client_id"), DataTypes.UUID)
-                        .withClusteringOrder(CqlIdentifier.fromCql("rent_start_date"), ClusteringOrder.ASC)
+                        .withClusteringOrder(CqlIdentifier.fromCql("rent_id"), ClusteringOrder.ASC)
                         .build();
         getSession().execute(createRentsByRoom);
 
@@ -93,27 +93,20 @@ public class RentRepository extends AbstractDatabaseRepository {
 
     public void endRent(Rent rent) {
         GregorianCalendar rentStartDate = rent.getRentStartDate();
-
         Date date = rentStartDate.getTime();
-        String formattedDate = null;
-        if (date != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            formattedDate = dateFormat.format(date);
-        } else {
-            System.err.println("Invalid rent start date: " + rentStartDate);
-        }
 
-//TODO NAPRAWIC TO TRZEBA BO NIE USUWA
+            long timestamp = date.getTime();
+
+            long roundedTimestamp = timestamp - (timestamp % 1000);
+
         SimpleStatement deleteRentByClient = QueryBuilder.deleteFrom(CqlIdentifier.fromCql("rents_by_client"))
                 .whereColumn(CqlIdentifier.fromCql("client_id")).isEqualTo(literal(rent.getClient().getId()))
-                .whereColumn(CqlIdentifier.fromCql("rent_start_date")).isEqualTo(literal(formattedDate))
                 .whereColumn(CqlIdentifier.fromCql("rent_id")).isEqualTo(literal(rent.getRentId()))
                 .build();
         getSession().execute(deleteRentByClient);
 
 
         SimpleStatement deleteRentByRoom = QueryBuilder.deleteFrom(CqlIdentifier.fromCql("rents_by_room"))
-                .whereColumn(CqlIdentifier.fromCql("rent_start_date")).isEqualTo(literal(formattedDate))
                 .whereColumn(CqlIdentifier.fromCql("rent_id")).isEqualTo(literal(rent.getRentId()))
                 .whereColumn(CqlIdentifier.fromCql("room_id")).isEqualTo(literal(rent.getRoom().getId()))
                 .build();
@@ -122,7 +115,7 @@ public class RentRepository extends AbstractDatabaseRepository {
 
         Insert insertRentsByRoom = QueryBuilder.insertInto(CqlIdentifier.fromCql("rents_by_room"))
                 .value(CqlIdentifier.fromCql("client_id"), literal(rent.getClient().getId()))
-                .value(CqlIdentifier.fromCql("rent_start_date"), literal(formattedDate))
+                .value(CqlIdentifier.fromCql("rent_start_date"), literal(roundedTimestamp))
                 .value(CqlIdentifier.fromCql("rent_id"), literal(rent.getRentId()))
                 .value(CqlIdentifier.fromCql("rent_end_date"), currentTimestamp())
                 .value(CqlIdentifier.fromCql("room_id"), literal(rent.getRoom().getId()))
@@ -134,7 +127,7 @@ public class RentRepository extends AbstractDatabaseRepository {
 
         Insert insertRentsByClient = QueryBuilder.insertInto(CqlIdentifier.fromCql("rents_by_client"))
                 .value(CqlIdentifier.fromCql("client_id"), literal(rent.getClient().getId()))
-                .value(CqlIdentifier.fromCql("rent_start_date"), literal(formattedDate))
+                .value(CqlIdentifier.fromCql("rent_start_date"), literal(roundedTimestamp))
                 .value(CqlIdentifier.fromCql("rent_id"), literal(rent.getRentId()))
                 .value(CqlIdentifier.fromCql("rent_end_date"), currentTimestamp())
                 .value(CqlIdentifier.fromCql("room_id"), literal(rent.getRoom().getId()))
