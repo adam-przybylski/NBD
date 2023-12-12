@@ -106,4 +106,16 @@ public class Client {
     public void setDiscriminator(String discriminator) {
         this.discriminator = discriminator;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Client client) {
+            return this.getId().equals(client.getId()) &&
+                    this.getFirstName().equals(client.getFirstName()) &&
+                    this.getLastName().equals(client.getFirstName()) &&
+                    this.getPersonalId().equals(client.getFirstName()) &&
+                    this.getDiscriminator().equals(client.getDiscriminator());
+        }
+        return false;
+    }
 }

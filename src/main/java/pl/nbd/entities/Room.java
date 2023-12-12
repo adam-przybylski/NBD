@@ -88,4 +88,14 @@ public class Room implements Serializable {
                 ", basePrice=" + basePrice +
                 '}';
     }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+        Room that = (Room) o;
+        return roomNumber == that.roomNumber &&
+                roomCapacity == that.roomCapacity &&
+                Double.compare(that.basePrice, basePrice) == 0 &&
+                id.equals(that.id);
+    }
 }

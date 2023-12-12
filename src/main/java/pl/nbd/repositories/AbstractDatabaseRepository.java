@@ -26,7 +26,8 @@ public abstract class AbstractDatabaseRepository implements AutoCloseable {
                 .ifNotExists()
                 .withSimpleStrategy(2)
                 .withDurableWrites(true);
-        SimpleStatement createKeyspaceStatement = keyspace.build();session.execute(createKeyspaceStatement);
+        SimpleStatement createKeyspaceStatement = keyspace.build();
+        session.execute(createKeyspaceStatement);
 
     }
 

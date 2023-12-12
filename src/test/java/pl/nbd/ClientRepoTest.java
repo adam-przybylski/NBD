@@ -1,79 +1,51 @@
-//package pl.nbd;
-//
-//import pl.nbd.entities.*;
-//import pl.nbd.mappers.MongoUUID;
-//import pl.nbd.repositories.ClientRepository;
-//import org.junit.jupiter.api.*;
-//import pl.nbd.repositories.RoomRepository;
-//
-//import java.util.UUID;
-//
-//
-//public class ClientRepoTest {
-//
-//    private static Client client1;
-//    private static Client client2;
-//    private static Client client3;
-//    private static ClientRepository clientRepository;
-//
-//    @BeforeEach
-//    public void clearData() {
-//        clientRepository = new ClientRepository();
-//        clientRepository.dropClientCollection();
-//        client1 = new RegularClient(new MongoUUID(UUID.randomUUID()),"Jan", "Kowalski", "12345678901", 0.1);
-//        client2 = new Default(new MongoUUID(UUID.randomUUID()),"Jan", "Nowak", "312214");
-//        client3 = new PremiumClient(new MongoUUID(UUID.randomUUID()),"John", "Doe", "666", 2, 0.1);
-//    }
-//
+package pl.nbd;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import pl.nbd.dao.ClientDao;
+import pl.nbd.entities.Client;
+import pl.nbd.entities.Default;
+import pl.nbd.mappers.ClientMapper;
+import pl.nbd.mappers.ClientMapperBuilder;
+import pl.nbd.repositories.ClientRepository;
+
+import java.util.UUID;
+
+
+public class ClientRepoTest {
+
+    private static Client client;
+
+    private static ClientRepository clientRepository;
+
+    private static ClientMapper clientMapper;
+
+    private static ClientDao clientDao;
+
+    @BeforeEach
+    public void setup() {
+        clientRepository = new ClientRepository();
+        client = new Default(UUID.randomUUID(), "Jan", "Kowalski", "123456789", "default");
+        clientMapper = new ClientMapperBuilder(clientRepository.getSession()).build();
+        clientDao = clientMapper.clientDao();
+    }
+
+    @Test
+    public void insertClientTest() {
+        clientDao.create(client);
+        Client client2 = clientDao.findById(client.getId());
+        Assertions.assertEquals(client.getFirstName(), client2.getFirstName());
+        Assertions.assertEquals(client.getLastName(), client2.getLastName());
+        Assertions.assertEquals(client.getPersonalId(), client2.getPersonalId());
+        Assertions.assertEquals(client.getDiscriminator(), client2.getDiscriminator());
+    }
+
 //    @Test
-//    public void insertClientTest() {
-//        clientRepository.insertClient(client1);
-//        clientRepository.insertClient(client2);
-//        clientRepository.insertClient(client3);
-//        Assertions.assertEquals(clientRepository.readAllClients().size(), 3);
+//    public void deleteClientTest() {
+//        clientDao.create(client);
+//        clientDao.remove(client);
+//        Client client2 = clientDao.findById(client.getId());
+//        Assertions.assertNull(client2);
 //    }
-//
-//    @Test
-//    public void readAllClientsTest() {
-//        clientRepository.insertClient(client1);
-//        Assertions.assertEquals(clientRepository.readAllClients().size(), 1);
-//    }
-//
-//    @Test
-//    public void readRegularClientsTest() {
-//        clientRepository.insertClient(client1);
-//        clientRepository.insertClient(client2);
-//        clientRepository.insertClient(client3);
-//        Assertions.assertEquals(clientRepository.readRegularClients().size(), 1);
-//    }
-//
-//    @Test
-//    public void readDefaultClientsTest() {
-//        clientRepository.insertClient(client1);
-//        clientRepository.insertClient(client2);
-//        clientRepository.insertClient(client3);
-//        Assertions.assertEquals(clientRepository.readDefaultClients().size(), 1);
-//    }
-//
-//    @Test
-//    public void readPremiumClientsTest() {
-//        clientRepository.insertClient(client1);
-//        clientRepository.insertClient(client2);
-//        clientRepository.insertClient(client3);
-//        Assertions.assertEquals(clientRepository.readPremiumClients().size(), 1);
-//    }
-//
-//    @Test
-//    public void updateClientTest() {
-//        clientRepository.insertClient(client1);
-//        clientRepository.updateClient("12345678901", "Nowak");
-//        Assertions.assertEquals(clientRepository.readAllClients().get(0).getLastName(), "Nowak");
-//    }
-//
-//    @Test
-//    public void dropClientCollectionTest() {
-//        clientRepository.insertClient(client1);
-//        clientRepository.dropClientCollection();
-//        Assertions.assertEquals(clientRepository.readAllClients().size(), 0);
-//    }
-//}
+}
