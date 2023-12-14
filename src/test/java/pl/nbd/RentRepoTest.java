@@ -63,7 +63,7 @@ public class RentRepoTest {
         rent.endRent(new GregorianCalendar(2023, GregorianCalendar.DECEMBER, 30));
         rentRepository.endRent(rent);
         List<Row> rows = rentRepository.selectAllDataByClient(client.getId());
-        Assertions.assertNotEquals(rows.get(0).getInstant("rent_end_date"), null);
+        Assertions.assertNotEquals(rows.get(0).getLong("rent_end_date"), 0);
     }
 
 

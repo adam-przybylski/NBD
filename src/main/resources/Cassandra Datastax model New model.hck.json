@@ -1,0 +1,1105 @@
+{
+    "modelName": "New model",
+    "collections": [
+        {
+            "collectionName": "clients",
+            "type": "object",
+            "properties": [
+                {
+                    "code": "",
+                    "name": "id",
+                    "isActivated": true,
+                    "primaryKey": true,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": true,
+                    "compositeClusteringKey": false,
+                    "GUID": "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff",
+                    "required": true,
+                    "error": {},
+                    "childRelationships": [
+                        "2dbd98f6-25ef-4108-828a-a68c8615acec",
+                        "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb"
+                    ]
+                },
+                {
+                    "code": "",
+                    "name": "discount",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "double",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "782fc4bd-041a-4da0-a6af-40481d01a264",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "discriminator",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "mode": "text",
+                    "subtype": "string",
+                    "childType": "char",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "75867672-72e9-45f6-ae26-7b981f81944e",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "first_name",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "mode": "text",
+                    "subtype": "string",
+                    "childType": "char",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "d1971e1b-386f-4663-8f63-a1470baeb414",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "last_name",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "mode": "text",
+                    "subtype": "string",
+                    "childType": "char",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "c04d980f-f553-4be0-a545-79e59630bbac",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "membership_level",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "integer",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "b30b199a-4de4-44c8-9902-5c1ff16625de",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "personal_id",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "mode": "text",
+                    "subtype": "string",
+                    "childType": "char",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "9cd86934-a984-4e41-837a-0b9dd3f99882",
+                    "error": {}
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "GUID": "00af6efd-84c9-4c99-8228-5257372c1fda",
+                "properties": []
+            },
+            "isActivated": true,
+            "additionalProperties": true,
+            "collectionUsers": [],
+            "tableIfNotExist": false,
+            "searchIndexIfNotExist": false,
+            "GUID": "99605842-5767-4425-aff1-38c32109da33",
+            "bucketId": "37963a8e-18dd-4fd9-a211-a9e9b4194696",
+            "code": "",
+            "compositePartitionKey": [
+                {
+                    "keyId": "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
+                }
+            ],
+            "compositeClusteringKey": [],
+            "tableOptions": {
+                "GUID": "18084aed-8143-44eb-88b9-09aae8c384f8",
+                "defaultTtl": 2,
+                "caching": {
+                    "GUID": "e943f483-6ef1-4586-9cf5-97e3d0c5766b"
+                }
+            },
+            "comments": "",
+            "hackoladeMeta": {}
+        },
+        {
+            "collectionName": "rents_by_client",
+            "type": "object",
+            "properties": [
+                {
+                    "code": "",
+                    "name": "client_id",
+                    "isActivated": true,
+                    "primaryKey": true,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": true,
+                    "compositeClusteringKey": false,
+                    "GUID": "8385b889-3f0c-4fd8-8528-abe6c6780b98",
+                    "required": true,
+                    "parentRelationship": "2dbd98f6-25ef-4108-828a-a68c8615acec",
+                    "foreignCollection": "99605842-5767-4425-aff1-38c32109da33",
+                    "foreignField": [
+                        "99605842-5767-4425-aff1-38c32109da33",
+                        "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
+                    ],
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_start_date",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": true,
+                    "mode": "bigint",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": true,
+                    "GUID": "235af6f7-4821-46cc-8a73-0f1ed433d844",
+                    "required": true,
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_id",
+                    "isActivated": true,
+                    "primaryKey": true,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": true,
+                    "GUID": "16471bf4-6539-45e1-a2c2-d842801211ce",
+                    "required": true,
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_cost",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "double",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "d08a6d93-b7a3-420b-8c9e-848eabb7dd28",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_end_date",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "bigint",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "53c3ff44-5f9f-4604-84ba-fabcca27c67c",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "room_id",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "1c9e0ca8-a024-4b37-b0df-d33fe21b91d4",
+                    "parentRelationship": "73d04509-3356-4b12-ae61-3d769278d04b",
+                    "foreignCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                    "foreignField": [
+                        "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                        "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
+                    ],
+                    "error": {}
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "GUID": "3f9a3d23-f5ee-4dd9-abf3-f3afa4300f08",
+                "properties": []
+            },
+            "isActivated": true,
+            "additionalProperties": true,
+            "collectionUsers": [],
+            "tableIfNotExist": false,
+            "searchIndexIfNotExist": false,
+            "GUID": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "bucketId": "37963a8e-18dd-4fd9-a211-a9e9b4194696",
+            "code": "",
+            "compositePartitionKey": [
+                {
+                    "keyId": "8385b889-3f0c-4fd8-8528-abe6c6780b98",
+                    "type": "ascending"
+                }
+            ],
+            "compositeClusteringKey": [
+                {
+                    "keyId": "235af6f7-4821-46cc-8a73-0f1ed433d844",
+                    "type": "ascending"
+                },
+                {
+                    "keyId": "16471bf4-6539-45e1-a2c2-d842801211ce",
+                    "type": "ascending"
+                }
+            ],
+            "tableOptions": {
+                "GUID": "32b5a77d-d12a-4c50-9e5a-d9313c19dd2b"
+            },
+            "comments": "",
+            "hackoladeMeta": {
+                "validationErrors": {}
+            }
+        },
+        {
+            "collectionName": "rents_by_room",
+            "type": "object",
+            "properties": [
+                {
+                    "code": "",
+                    "name": "room_id",
+                    "isActivated": true,
+                    "primaryKey": true,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": true,
+                    "compositeClusteringKey": false,
+                    "GUID": "be20e8e8-9dbc-4925-bfe3-802a3ab9d650",
+                    "required": true,
+                    "parentRelationship": "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
+                    "foreignCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                    "foreignField": [
+                        "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                        "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
+                    ],
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_start_date",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": true,
+                    "mode": "bigint",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": true,
+                    "GUID": "70c623b0-3658-45c9-810d-f07de5e1eabf",
+                    "required": true,
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_id",
+                    "isActivated": true,
+                    "primaryKey": true,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": true,
+                    "GUID": "db31ac1e-50c1-48d0-8a27-db12c5266bad",
+                    "required": true,
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "client_id",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "30c39588-7dca-4982-8791-be549a06f028",
+                    "parentRelationship": "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb",
+                    "foreignCollection": "99605842-5767-4425-aff1-38c32109da33",
+                    "foreignField": [
+                        "99605842-5767-4425-aff1-38c32109da33",
+                        "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
+                    ],
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_cost",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "double",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "45033e5e-4bba-4aa2-bc8d-85a378a78288",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "rent_end_date",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "bigint",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "c5b78d73-41b3-4651-a156-0b78bed814c2",
+                    "error": {}
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "GUID": "4639ff33-9bcc-432e-971c-c7fe6ce5354d",
+                "properties": []
+            },
+            "isActivated": true,
+            "additionalProperties": true,
+            "collectionUsers": [],
+            "tableIfNotExist": false,
+            "searchIndexIfNotExist": false,
+            "GUID": "e3635918-1031-452a-b88e-34f25d62d165",
+            "bucketId": "37963a8e-18dd-4fd9-a211-a9e9b4194696",
+            "code": "",
+            "compositePartitionKey": [
+                {
+                    "keyId": "be20e8e8-9dbc-4925-bfe3-802a3ab9d650",
+                    "type": "ascending"
+                }
+            ],
+            "compositeClusteringKey": [
+                {
+                    "keyId": "70c623b0-3658-45c9-810d-f07de5e1eabf",
+                    "type": "ascending"
+                },
+                {
+                    "keyId": "db31ac1e-50c1-48d0-8a27-db12c5266bad",
+                    "type": "ascending"
+                }
+            ],
+            "tableOptions": {
+                "GUID": "fd83c7ae-1630-46b1-9254-242799d2fada"
+            },
+            "comments": "",
+            "hackoladeMeta": {
+                "validationErrors": {}
+            }
+        },
+        {
+            "collectionName": "rooms",
+            "type": "object",
+            "properties": [
+                {
+                    "code": "",
+                    "name": "id",
+                    "isActivated": true,
+                    "primaryKey": true,
+                    "childType": "uuid",
+                    "type": "string",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": true,
+                    "compositeClusteringKey": false,
+                    "GUID": "5faf81af-1c8f-4eb0-ba6d-52af138ea129",
+                    "required": true,
+                    "error": {},
+                    "childRelationships": [
+                        "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
+                        "73d04509-3356-4b12-ae61-3d769278d04b"
+                    ]
+                },
+                {
+                    "code": "",
+                    "name": "room_capacity",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": true,
+                    "mode": "integer",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": true,
+                    "GUID": "d9e771ee-a433-4c71-9f3b-f3daa7cd9115",
+                    "required": true,
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "base_price",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "double",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "09b57b97-96cf-4dd6-af03-305ed9d5bc53",
+                    "error": {}
+                },
+                {
+                    "code": "",
+                    "name": "room_number",
+                    "isActivated": true,
+                    "exclusiveMinimum": false,
+                    "exclusiveMaximum": false,
+                    "primaryKey": false,
+                    "mode": "integer",
+                    "childType": "numeric",
+                    "type": "numeric",
+                    "compositeKey": [
+                        "compositePartitionKey",
+                        "compositeClusteringKey"
+                    ],
+                    "compositePartitionKey": false,
+                    "compositeClusteringKey": false,
+                    "GUID": "4bfae5b0-a8a0-4c87-af1d-084e80130271",
+                    "error": {}
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "GUID": "a3f19a5a-4889-4889-a162-aca93d571620",
+                "properties": []
+            },
+            "isActivated": true,
+            "additionalProperties": true,
+            "collectionUsers": [],
+            "tableIfNotExist": false,
+            "searchIndexIfNotExist": false,
+            "GUID": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+            "bucketId": "37963a8e-18dd-4fd9-a211-a9e9b4194696",
+            "code": "",
+            "compositePartitionKey": [
+                {
+                    "keyId": "5faf81af-1c8f-4eb0-ba6d-52af138ea129",
+                    "type": "ascending"
+                }
+            ],
+            "compositeClusteringKey": [
+                {
+                    "keyId": "d9e771ee-a433-4c71-9f3b-f3daa7cd9115",
+                    "type": "ascending"
+                }
+            ],
+            "tableOptions": {
+                "GUID": "0d6727d6-6b60-4b28-960b-876db24ab7f5"
+            },
+            "comments": "",
+            "hackoladeMeta": {
+                "validationErrors": {}
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "name": "rent_a_room",
+            "type": "bucket",
+            "collectionIds": [
+                "99605842-5767-4425-aff1-38c32109da33",
+                "325746cb-e03b-4aca-b597-e3cd3689ecab",
+                "e3635918-1031-452a-b88e-34f25d62d165",
+                "6001ddd9-6b13-46d8-9fb3-882fffa6abcc"
+            ],
+            "backgroundColor": {
+                "r": 216,
+                "g": 0,
+                "b": 115,
+                "a": 1
+            },
+            "show": true,
+            "isActivated": true,
+            "indexes": [],
+            "replStrategy": "SimpleStrategy",
+            "addToCqlScript": true,
+            "keyspaceIfNotExist": false,
+            "GUID": "37963a8e-18dd-4fd9-a211-a9e9b4194696",
+            "hackoladeMeta": {},
+            "code": "",
+            "addFieldsToBucket": true,
+            "isPlugin": true
+        }
+    ],
+    "views": [],
+    "relationships": [
+        {
+            "name": "client_id:id",
+            "relationshipType": "",
+            "parentField": [
+                [
+                    "99605842-5767-4425-aff1-38c32109da33",
+                    "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
+                ]
+            ],
+            "parentCardinality": "n",
+            "childField": [
+                [
+                    "325746cb-e03b-4aca-b597-e3cd3689ecab",
+                    "8385b889-3f0c-4fd8-8528-abe6c6780b98"
+                ]
+            ],
+            "isActivated": true,
+            "childCardinality": "1",
+            "GUID": "2dbd98f6-25ef-4108-828a-a68c8615acec",
+            "parentCollection": "99605842-5767-4425-aff1-38c32109da33",
+            "childCollection": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "hackoladeStyles": {
+                "GUID": "e5984f06-78a5-4928-985f-4863cbb7af95",
+                "autoPositioning": true,
+                "type": "Orthogonal",
+                "thickness": 2,
+                "color": "#79c4ff",
+                "dataType": ""
+            }
+        },
+        {
+            "name": "room_id:id",
+            "relationshipType": "",
+            "parentField": [
+                [
+                    "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                    "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
+                ]
+            ],
+            "parentCardinality": "n",
+            "childField": [
+                [
+                    "e3635918-1031-452a-b88e-34f25d62d165",
+                    "be20e8e8-9dbc-4925-bfe3-802a3ab9d650"
+                ]
+            ],
+            "isActivated": true,
+            "childCardinality": "1",
+            "GUID": "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
+            "parentCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+            "childCollection": "e3635918-1031-452a-b88e-34f25d62d165",
+            "hackoladeStyles": {
+                "GUID": "836b2a70-d3d8-400b-a8f2-4aabc3ca97f8",
+                "autoPositioning": true,
+                "type": "Orthogonal",
+                "thickness": 2,
+                "color": "#79c4ff",
+                "dataType": ""
+            }
+        },
+        {
+            "name": "New Relationship",
+            "relationshipType": "",
+            "parentField": [
+                [
+                    "99605842-5767-4425-aff1-38c32109da33",
+                    "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
+                ]
+            ],
+            "parentCardinality": "n",
+            "childField": [
+                [
+                    "e3635918-1031-452a-b88e-34f25d62d165",
+                    "30c39588-7dca-4982-8791-be549a06f028"
+                ]
+            ],
+            "isActivated": true,
+            "childCardinality": "1",
+            "GUID": "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb",
+            "parentCollection": "99605842-5767-4425-aff1-38c32109da33",
+            "childCollection": "e3635918-1031-452a-b88e-34f25d62d165",
+            "hackoladeStyles": {
+                "GUID": "722d2860-acfb-4973-9694-4b92f2aacb69",
+                "autoPositioning": true,
+                "type": "Orthogonal",
+                "thickness": 2,
+                "color": "#79c4ff",
+                "dataType": ""
+            }
+        },
+        {
+            "name": "New Relationship(1)",
+            "relationshipType": "",
+            "parentField": [
+                [
+                    "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                    "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
+                ]
+            ],
+            "parentCardinality": "n",
+            "childField": [
+                [
+                    "325746cb-e03b-4aca-b597-e3cd3689ecab",
+                    "1c9e0ca8-a024-4b37-b0df-d33fe21b91d4"
+                ]
+            ],
+            "isActivated": true,
+            "childCardinality": "1",
+            "GUID": "73d04509-3356-4b12-ae61-3d769278d04b",
+            "parentCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+            "childCollection": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "hackoladeStyles": {
+                "GUID": "7c96dacd-7314-4e59-a775-8eb52bca0860",
+                "autoPositioning": true,
+                "type": "Orthogonal",
+                "thickness": 2,
+                "color": "#79c4ff",
+                "dataType": ""
+            }
+        }
+    ],
+    "users": [],
+    "diagramViews": [
+        {
+            "GUID": "b2ba6233-0065-46f5-a126-dfbe9f07fcd8",
+            "name": "diagram",
+            "buckets": [
+                "37963a8e-18dd-4fd9-a211-a9e9b4194696"
+            ],
+            "entities": [
+                "99605842-5767-4425-aff1-38c32109da33",
+                "325746cb-e03b-4aca-b597-e3cd3689ecab",
+                "e3635918-1031-452a-b88e-34f25d62d165",
+                "6001ddd9-6b13-46d8-9fb3-882fffa6abcc"
+            ]
+        }
+    ],
+    "idToNameHashTable": {
+        "37963a8e-18dd-4fd9-a211-a9e9b4194696": "rent_a_room",
+        "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff": "id",
+        "782fc4bd-041a-4da0-a6af-40481d01a264": "discount",
+        "75867672-72e9-45f6-ae26-7b981f81944e": "discriminator",
+        "d1971e1b-386f-4663-8f63-a1470baeb414": "first_name",
+        "c04d980f-f553-4be0-a545-79e59630bbac": "last_name",
+        "b30b199a-4de4-44c8-9902-5c1ff16625de": "membership_level",
+        "9cd86934-a984-4e41-837a-0b9dd3f99882": "personal_id",
+        "99605842-5767-4425-aff1-38c32109da33": "clients",
+        "8385b889-3f0c-4fd8-8528-abe6c6780b98": "client_id",
+        "235af6f7-4821-46cc-8a73-0f1ed433d844": "rent_start_date",
+        "16471bf4-6539-45e1-a2c2-d842801211ce": "rent_id",
+        "d08a6d93-b7a3-420b-8c9e-848eabb7dd28": "rent_cost",
+        "53c3ff44-5f9f-4604-84ba-fabcca27c67c": "rent_end_date",
+        "1c9e0ca8-a024-4b37-b0df-d33fe21b91d4": "room_id",
+        "325746cb-e03b-4aca-b597-e3cd3689ecab": "rents_by_client",
+        "be20e8e8-9dbc-4925-bfe3-802a3ab9d650": "room_id",
+        "70c623b0-3658-45c9-810d-f07de5e1eabf": "rent_start_date",
+        "db31ac1e-50c1-48d0-8a27-db12c5266bad": "rent_id",
+        "30c39588-7dca-4982-8791-be549a06f028": "client_id",
+        "45033e5e-4bba-4aa2-bc8d-85a378a78288": "rent_cost",
+        "c5b78d73-41b3-4651-a156-0b78bed814c2": "rent_end_date",
+        "e3635918-1031-452a-b88e-34f25d62d165": "rents_by_room",
+        "5faf81af-1c8f-4eb0-ba6d-52af138ea129": "id",
+        "d9e771ee-a433-4c71-9f3b-f3daa7cd9115": "room_capacity",
+        "09b57b97-96cf-4dd6-af03-305ed9d5bc53": "base_price",
+        "4bfae5b0-a8a0-4c87-af1d-084e80130271": "room_number",
+        "6001ddd9-6b13-46d8-9fb3-882fffa6abcc": "rooms",
+        "b2ba6233-0065-46f5-a126-dfbe9f07fcd8": "diagram",
+        "2dbd98f6-25ef-4108-828a-a68c8615acec": "client_id:id",
+        "c518501d-b8b5-40c7-a6fe-9524eacb2d08": "room_id:id",
+        "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb": "New Relationship",
+        "73d04509-3356-4b12-ae61-3d769278d04b": "New Relationship(1)"
+    },
+    "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "37bfba92-4474-4dde-a5a5-10b66c8c3fa2"
+    },
+    "polyglotDefinitions": {
+        "type": "polyglotDefinitions",
+        "properties": [],
+        "GUID": "195eba52-6ad6-45d1-99f5-ec215d318fde"
+    },
+    "externalDefinitions": {
+        "type": "externalDefinitions",
+        "properties": [],
+        "GUID": "45a95e8f-6f77-40a0-af0d-4c165159ec57"
+    },
+    "sources": [],
+    "decorativeSymbols": [],
+    "dbVersion": "3.x",
+    "dbVendor": "Cassandra",
+    "appTarget": "CASSANDRA",
+    "creationTS": "2023-12-14T21:24:38.327Z",
+    "GUID": "41386e27-5e76-47d5-b89f-587b49781f5a",
+    "isLineageEnabled": false,
+    "lastModifTS": "2023-12-14T21:42:38.245Z",
+    "persistenceSchemaVersion": "7",
+    "isCreatedByPlugin": true,
+    "pluginInformation": {
+        "pluginName": "Cassandra",
+        "pluginVersion": "0.1.131",
+        "pluginEngineVersion": "1.0.0"
+    },
+    "applicationInformation": {
+        "version": "7.0.3"
+    },
+    "settings": {
+        "centralPane": {
+            "dbLevel": {
+                "erd": [
+                    {
+                        "GUID": "99605842-5767-4425-aff1-38c32109da33",
+                        "x": 1542.631840796021,
+                        "y": 1317.0497512437823,
+                        "width": 300,
+                        "height": 156,
+                        "color": {}
+                    },
+                    {
+                        "GUID": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+                        "x": 1582.631840796021,
+                        "y": 1118.0497512437823,
+                        "width": 294,
+                        "height": 138,
+                        "color": {}
+                    },
+                    {
+                        "GUID": "e3635918-1031-452a-b88e-34f25d62d165",
+                        "x": 1232.631840796021,
+                        "y": 1118.0497512437823,
+                        "width": 287,
+                        "height": 138,
+                        "color": {}
+                    },
+                    {
+                        "GUID": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                        "x": 1212.631840796021,
+                        "y": 1341.0497512437823,
+                        "width": 283,
+                        "height": 102,
+                        "color": {}
+                    }
+                ],
+                "erdDefinitions": {
+                    "erd": [],
+                    "rootPath": [],
+                    "entities": [],
+                    "decorativeSymbols": []
+                },
+                "buckets": [
+                    {
+                        "x": 1172.631840796021,
+                        "y": 1078.0497512437823,
+                        "GUID": "37963a8e-18dd-4fd9-a211-a9e9b4194696"
+                    }
+                ],
+                "collapsedNodes": [],
+                "activeRelationship": "",
+                "activeRelationshipFields": {
+                    "childField": [],
+                    "parentField": []
+                },
+                "selectedCollections": [],
+                "displayColorPicker": false,
+                "graphView": {
+                    "erd": [],
+                    "buckets": [],
+                    "decorativeSymbols": [],
+                    "forceLayout": true,
+                    "defaultLinkLength": 300
+                },
+                "diagramViews": [
+                    {
+                        "GUID": "b2ba6233-0065-46f5-a126-dfbe9f07fcd8",
+                        "entities": [
+                            {
+                                "GUID": "99605842-5767-4425-aff1-38c32109da33",
+                                "x": 1578.143283582087,
+                                "y": 1134.1552238806,
+                                "width": 301,
+                                "height": 156,
+                                "color": {}
+                            },
+                            {
+                                "GUID": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+                                "x": 1605.0915422885535,
+                                "y": 1355.649751243786,
+                                "width": 295,
+                                "height": 138,
+                                "color": {}
+                            },
+                            {
+                                "GUID": "e3635918-1031-452a-b88e-34f25d62d165",
+                                "x": 1207.8079601990053,
+                                "y": 1365.1064676616913,
+                                "width": 287,
+                                "height": 138,
+                                "color": {}
+                            },
+                            {
+                                "GUID": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
+                                "x": 1232.7273631840803,
+                                "y": 1137.7303482587092,
+                                "width": 283,
+                                "height": 102,
+                                "color": {}
+                            }
+                        ],
+                        "buckets": [
+                            {
+                                "x": 1167.8079601990053,
+                                "y": 1094.1552238806,
+                                "GUID": "37963a8e-18dd-4fd9-a211-a9e9b4194696"
+                            }
+                        ],
+                        "graphView": {
+                            "erd": [],
+                            "buckets": [],
+                            "decorativeSymbols": [],
+                            "forceLayout": true,
+                            "defaultLinkLength": 300
+                        },
+                        "displayOptions": {},
+                        "relationships": [
+                            {
+                                "GUID": "96acf709-d759-42d6-9501-d91971e1532c",
+                                "autoPositioning": true,
+                                "sides": [
+                                    "bottom",
+                                    "top"
+                                ],
+                                "shape": [
+                                    {
+                                        "x": 1726.131840796021,
+                                        "y": 1256.0497512437823
+                                    },
+                                    {
+                                        "x": 1726.131840796021,
+                                        "y": 1288.487562189055
+                                    },
+                                    {
+                                        "x": 1711.14029850746,
+                                        "y": 1288.487562189055
+                                    },
+                                    {
+                                        "x": 1711.14029850746,
+                                        "y": 1320.9253731343276
+                                    }
+                                ]
+                            },
+                            {
+                                "GUID": "2dbd98f6-25ef-4108-828a-a68c8615acec",
+                                "autoPositioning": true,
+                                "sides": [
+                                    "top",
+                                    "bottom"
+                                ],
+                                "shape": [
+                                    {
+                                        "x": 1752.5915422885535,
+                                        "y": 1355.649751243786
+                                    },
+                                    {
+                                        "x": 1752.5915422885535,
+                                        "y": 1322.902487562193
+                                    },
+                                    {
+                                        "x": 1728.643283582087,
+                                        "y": 1322.902487562193
+                                    },
+                                    {
+                                        "x": 1728.643283582087,
+                                        "y": 1290.1552238806
+                                    }
+                                ]
+                            },
+                            {
+                                "GUID": "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
+                                "autoPositioning": false,
+                                "sides": [
+                                    "top",
+                                    "bottom"
+                                ],
+                                "shape": [
+                                    {
+                                        "x": 1348.9437810945276,
+                                        "y": 1365.1064676616913
+                                    },
+                                    {
+                                        "x": 1348.9437810945276,
+                                        "y": 1239.7303482587092
+                                    }
+                                ]
+                            },
+                            {
+                                "GUID": "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb",
+                                "autoPositioning": true,
+                                "sides": [
+                                    "right",
+                                    "left"
+                                ],
+                                "shape": [
+                                    {
+                                        "x": 1494.8079601990053,
+                                        "y": 1434.1064676616913
+                                    },
+                                    {
+                                        "x": 1536.475621890546,
+                                        "y": 1434.1064676616913
+                                    },
+                                    {
+                                        "x": 1536.475621890546,
+                                        "y": 1212.1552238806
+                                    },
+                                    {
+                                        "x": 1578.143283582087,
+                                        "y": 1212.1552238806
+                                    }
+                                ]
+                            },
+                            {
+                                "GUID": "73d04509-3356-4b12-ae61-3d769278d04b",
+                                "autoPositioning": true,
+                                "sides": [
+                                    "left",
+                                    "right"
+                                ],
+                                "shape": [
+                                    {
+                                        "x": 1605.0915422885535,
+                                        "y": 1424.649751243786
+                                    },
+                                    {
+                                        "x": 1560.4094527363168,
+                                        "y": 1424.649751243786
+                                    },
+                                    {
+                                        "x": 1560.4094527363168,
+                                        "y": 1188.7303482587092
+                                    },
+                                    {
+                                        "x": 1515.7273631840803,
+                                        "y": 1188.7303482587092
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "decorativeSymbols": [],
+                "nestedCollectionsLayout": "horizontal",
+                "options": [],
+                "relationshipUpdateDisabled": false,
+                "displayOptions": {}
+            },
+            "collectionLevel": {},
+            "changed": false
+        },
+        "dtDiagram": {
+            "collapsedNodes": [],
+            "shouldDistributeCollections": false
+        }
+    }
+}
