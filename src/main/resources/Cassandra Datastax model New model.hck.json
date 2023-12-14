@@ -20,11 +20,7 @@
                     "compositeClusteringKey": false,
                     "GUID": "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff",
                     "required": true,
-                    "error": {},
-                    "childRelationships": [
-                        "2dbd98f6-25ef-4108-828a-a68c8615acec",
-                        "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb"
-                    ]
+                    "error": {}
                 },
                 {
                     "code": "",
@@ -185,12 +181,6 @@
                     "compositeClusteringKey": false,
                     "GUID": "8385b889-3f0c-4fd8-8528-abe6c6780b98",
                     "required": true,
-                    "parentRelationship": "2dbd98f6-25ef-4108-828a-a68c8615acec",
-                    "foreignCollection": "99605842-5767-4425-aff1-38c32109da33",
-                    "foreignField": [
-                        "99605842-5767-4425-aff1-38c32109da33",
-                        "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
-                    ],
                     "error": {}
                 },
                 {
@@ -282,12 +272,6 @@
                     "compositePartitionKey": false,
                     "compositeClusteringKey": false,
                     "GUID": "1c9e0ca8-a024-4b37-b0df-d33fe21b91d4",
-                    "parentRelationship": "73d04509-3356-4b12-ae61-3d769278d04b",
-                    "foreignCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-                    "foreignField": [
-                        "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-                        "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
-                    ],
                     "error": {}
                 }
             ],
@@ -347,12 +331,6 @@
                     "compositeClusteringKey": false,
                     "GUID": "be20e8e8-9dbc-4925-bfe3-802a3ab9d650",
                     "required": true,
-                    "parentRelationship": "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
-                    "foreignCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-                    "foreignField": [
-                        "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-                        "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
-                    ],
                     "error": {}
                 },
                 {
@@ -406,12 +384,6 @@
                     "compositePartitionKey": false,
                     "compositeClusteringKey": false,
                     "GUID": "30c39588-7dca-4982-8791-be549a06f028",
-                    "parentRelationship": "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb",
-                    "foreignCollection": "99605842-5767-4425-aff1-38c32109da33",
-                    "foreignField": [
-                        "99605842-5767-4425-aff1-38c32109da33",
-                        "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
-                    ],
                     "error": {}
                 },
                 {
@@ -509,11 +481,7 @@
                     "compositeClusteringKey": false,
                     "GUID": "5faf81af-1c8f-4eb0-ba6d-52af138ea129",
                     "required": true,
-                    "error": {},
-                    "childRelationships": [
-                        "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
-                        "73d04509-3356-4b12-ae61-3d769278d04b"
-                    ]
+                    "error": {}
                 },
                 {
                     "code": "",
@@ -642,121 +610,169 @@
         {
             "name": "client_id:id",
             "relationshipType": "",
-            "parentField": [
-                [
-                    "99605842-5767-4425-aff1-38c32109da33",
-                    "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
-                ]
-            ],
+            "parentField": [],
             "parentCardinality": "n",
-            "childField": [
-                [
-                    "325746cb-e03b-4aca-b597-e3cd3689ecab",
-                    "8385b889-3f0c-4fd8-8528-abe6c6780b98"
-                ]
-            ],
+            "childField": [],
             "isActivated": true,
             "childCardinality": "1",
             "GUID": "2dbd98f6-25ef-4108-828a-a68c8615acec",
-            "parentCollection": "99605842-5767-4425-aff1-38c32109da33",
-            "childCollection": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "parentCollection": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "childCollection": "99605842-5767-4425-aff1-38c32109da33",
             "hackoladeStyles": {
                 "GUID": "e5984f06-78a5-4928-985f-4863cbb7af95",
                 "autoPositioning": true,
                 "type": "Orthogonal",
                 "thickness": 2,
                 "color": "#79c4ff",
-                "dataType": ""
+                "dataType": "",
+                "shape": [
+                    {
+                        "x": 1742.631840796021,
+                        "y": 1319.0497512437823
+                    },
+                    {
+                        "x": 1742.631840796021,
+                        "y": 1288.5497512437823
+                    },
+                    {
+                        "x": 1729.631840796021,
+                        "y": 1288.5497512437823
+                    },
+                    {
+                        "x": 1729.631840796021,
+                        "y": 1258.0497512437823
+                    }
+                ],
+                "sides": [
+                    "top",
+                    "bottom"
+                ]
             }
         },
         {
             "name": "room_id:id",
             "relationshipType": "",
-            "parentField": [
-                [
-                    "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-                    "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
-                ]
-            ],
+            "parentField": [],
             "parentCardinality": "n",
-            "childField": [
-                [
-                    "e3635918-1031-452a-b88e-34f25d62d165",
-                    "be20e8e8-9dbc-4925-bfe3-802a3ab9d650"
-                ]
-            ],
+            "childField": [],
             "isActivated": true,
             "childCardinality": "1",
             "GUID": "c518501d-b8b5-40c7-a6fe-9524eacb2d08",
-            "parentCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-            "childCollection": "e3635918-1031-452a-b88e-34f25d62d165",
+            "parentCollection": "e3635918-1031-452a-b88e-34f25d62d165",
+            "childCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
             "hackoladeStyles": {
                 "GUID": "836b2a70-d3d8-400b-a8f2-4aabc3ca97f8",
                 "autoPositioning": true,
                 "type": "Orthogonal",
                 "thickness": 2,
                 "color": "#79c4ff",
-                "dataType": ""
+                "dataType": "",
+                "shape": [
+                    {
+                        "x": 1354.131840796021,
+                        "y": 1343.0497512437823
+                    },
+                    {
+                        "x": 1354.131840796021,
+                        "y": 1300.5497512437823
+                    },
+                    {
+                        "x": 1328.2985074626877,
+                        "y": 1300.5497512437823
+                    },
+                    {
+                        "x": 1328.2985074626877,
+                        "y": 1258.0497512437823
+                    }
+                ],
+                "sides": [
+                    "top",
+                    "bottom"
+                ]
             }
         },
         {
             "name": "New Relationship",
             "relationshipType": "",
-            "parentField": [
-                [
-                    "99605842-5767-4425-aff1-38c32109da33",
-                    "45c3a2d0-43bb-40c2-bdf5-6fbd3a0fd1ff"
-                ]
-            ],
+            "parentField": [],
             "parentCardinality": "n",
-            "childField": [
-                [
-                    "e3635918-1031-452a-b88e-34f25d62d165",
-                    "30c39588-7dca-4982-8791-be549a06f028"
-                ]
-            ],
+            "childField": [],
             "isActivated": true,
             "childCardinality": "1",
             "GUID": "6c65f57e-3be0-41f2-bfb7-1f0ed6081deb",
-            "parentCollection": "99605842-5767-4425-aff1-38c32109da33",
-            "childCollection": "e3635918-1031-452a-b88e-34f25d62d165",
+            "parentCollection": "e3635918-1031-452a-b88e-34f25d62d165",
+            "childCollection": "99605842-5767-4425-aff1-38c32109da33",
             "hackoladeStyles": {
                 "GUID": "722d2860-acfb-4973-9694-4b92f2aacb69",
                 "autoPositioning": true,
                 "type": "Orthogonal",
                 "thickness": 2,
                 "color": "#79c4ff",
-                "dataType": ""
+                "dataType": "",
+                "shape": [
+                    {
+                        "x": 1642.631840796021,
+                        "y": 1319.0497512437823
+                    },
+                    {
+                        "x": 1642.631840796021,
+                        "y": 1288.5497512437823
+                    },
+                    {
+                        "x": 1376.131840796021,
+                        "y": 1288.5497512437823
+                    },
+                    {
+                        "x": 1376.131840796021,
+                        "y": 1258.0497512437823
+                    }
+                ],
+                "sides": [
+                    "top",
+                    "bottom"
+                ]
             }
         },
         {
             "name": "New Relationship(1)",
             "relationshipType": "",
-            "parentField": [
-                [
-                    "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-                    "5faf81af-1c8f-4eb0-ba6d-52af138ea129"
-                ]
-            ],
+            "parentField": [],
             "parentCardinality": "n",
-            "childField": [
-                [
-                    "325746cb-e03b-4aca-b597-e3cd3689ecab",
-                    "1c9e0ca8-a024-4b37-b0df-d33fe21b91d4"
-                ]
-            ],
+            "childField": [],
             "isActivated": true,
             "childCardinality": "1",
             "GUID": "73d04509-3356-4b12-ae61-3d769278d04b",
-            "parentCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
-            "childCollection": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "parentCollection": "325746cb-e03b-4aca-b597-e3cd3689ecab",
+            "childCollection": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
             "hackoladeStyles": {
                 "GUID": "7c96dacd-7314-4e59-a775-8eb52bca0860",
                 "autoPositioning": true,
                 "type": "Orthogonal",
                 "thickness": 2,
                 "color": "#79c4ff",
-                "dataType": ""
+                "dataType": "",
+                "shape": [
+                    {
+                        "x": 1495.631840796021,
+                        "y": 1394.0497512437823
+                    },
+                    {
+                        "x": 1539.131840796021,
+                        "y": 1394.0497512437823
+                    },
+                    {
+                        "x": 1539.131840796021,
+                        "y": 1189.0497512437823
+                    },
+                    {
+                        "x": 1582.631840796021,
+                        "y": 1189.0497512437823
+                    }
+                ],
+                "sides": [
+                    "right",
+                    "left"
+                ]
             }
         }
     ],
@@ -832,9 +848,9 @@
     "dbVendor": "Cassandra",
     "appTarget": "CASSANDRA",
     "creationTS": "2023-12-14T21:24:38.327Z",
-    "GUID": "41386e27-5e76-47d5-b89f-587b49781f5a",
+    "GUID": "3d71dcce-854d-4329-96e2-02cd309be480",
     "isLineageEnabled": false,
-    "lastModifTS": "2023-12-14T21:42:38.245Z",
+    "lastModifTS": "2023-12-14T21:59:11.531Z",
     "persistenceSchemaVersion": "7",
     "isCreatedByPlugin": true,
     "pluginInformation": {
@@ -845,6 +861,7 @@
     "applicationInformation": {
         "version": "7.0.3"
     },
+    "hackoladeMeta": {},
     "settings": {
         "centralPane": {
             "dbLevel": {
@@ -852,7 +869,7 @@
                     {
                         "GUID": "99605842-5767-4425-aff1-38c32109da33",
                         "x": 1542.631840796021,
-                        "y": 1317.0497512437823,
+                        "y": 1319.0497512437823,
                         "width": 300,
                         "height": 156,
                         "color": {}
@@ -860,7 +877,7 @@
                     {
                         "GUID": "325746cb-e03b-4aca-b597-e3cd3689ecab",
                         "x": 1582.631840796021,
-                        "y": 1118.0497512437823,
+                        "y": 1120.0497512437823,
                         "width": 294,
                         "height": 138,
                         "color": {}
@@ -868,7 +885,7 @@
                     {
                         "GUID": "e3635918-1031-452a-b88e-34f25d62d165",
                         "x": 1232.631840796021,
-                        "y": 1118.0497512437823,
+                        "y": 1120.0497512437823,
                         "width": 287,
                         "height": 138,
                         "color": {}
@@ -876,7 +893,7 @@
                     {
                         "GUID": "6001ddd9-6b13-46d8-9fb3-882fffa6abcc",
                         "x": 1212.631840796021,
-                        "y": 1341.0497512437823,
+                        "y": 1343.0497512437823,
                         "width": 283,
                         "height": 102,
                         "color": {}
@@ -891,7 +908,7 @@
                 "buckets": [
                     {
                         "x": 1172.631840796021,
-                        "y": 1078.0497512437823,
+                        "y": 1080.0497512437823,
                         "GUID": "37963a8e-18dd-4fd9-a211-a9e9b4194696"
                     }
                 ],
