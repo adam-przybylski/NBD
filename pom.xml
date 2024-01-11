@@ -37,6 +37,39 @@
       <artifactId>mongodb-crypt</artifactId>
       <version>1.8.0</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka_2.13</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/connect-api -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>connect-api</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/connect-transforms -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>connect-transforms</artifactId>
+      <version>3.6.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+
   </dependencies>
+
+
 
 </project>
