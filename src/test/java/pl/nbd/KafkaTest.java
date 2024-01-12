@@ -2,33 +2,40 @@ package pl.nbd;
 
 import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.KafkaFuture;
+import org.apache.kafka.common.MessageFormatter;
+import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.common.serialization.UUIDDeserializer;
 import org.apache.kafka.common.serialization.UUIDSerializer;
-import org.jose4j.json.internal.json_simple.JSONObject;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import pl.nbd.entities.Client;
 import pl.nbd.entities.Default;
 import pl.nbd.mappers.MongoUUID;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.UUID;
+import java.text.MessageFormat;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class KafkaTest {
 
     KafkaProducer<UUID, String> producer;
-    KafkaConsumer<UUID, String> consumer;
+    List<KafkaConsumer<UUID, String>> consumerGroup;
 
     String topicName = "clients2";
 
@@ -66,21 +73,16 @@ public class KafkaTest {
         producer = new KafkaProducer<>(producerConfig);
 
         Client client = new Default(new MongoUUID(UUID.randomUUID()), "Adam", "Przybylski", "12345678901");
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", client.getId().toString());
-        jsonObject.put("firstName", client.getFirstName());
-        jsonObject.put("lastName", client.getLastName());
-        jsonObject.put("personalId", client.getPersonalId());
-        String jsonClient = jsonObject.toJSONString();
+        JSONObject jsonObject = new JSONObject(client);
+        String jsonClient = jsonObject.toString();
         ProducerRecord<UUID, String> record = new ProducerRecord<>(topicName, client.getId().getUuid(), jsonClient);
         Future<RecordMetadata> sent = producer.send(record);
         RecordMetadata recordMetadata = sent.get();
         System.out.println(recordMetadata);
     }
 
-    @Test
     public void initConsumerGroup() {
-        List<KafkaConsumer<UUID, String>> consumerGroup = new ArrayList<>();
+        consumerGroup = new ArrayList<>();
 
         Properties consumerConfig = new Properties();
         consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, UUIDDeserializer.class.getName());
@@ -94,6 +96,51 @@ public class KafkaTest {
             consumer.subscribe(List.of(topicName));
             consumerGroup.add(consumer);
         }
+    }
+
+    private void consume(KafkaConsumer<UUID, String> consumer) {
+        try {
+            consumer.poll(0);
+            Set<TopicPartition> consumerAssigment = consumer.assignment();
+            System.out.println(consumer.groupMetadata().memberId() + " " + consumerAssigment);
+            consumer.seekToBeginning(consumerAssigment);
+
+            Duration timeout = Duration.of(100, ChronoUnit.MILLIS);
+            MessageFormat formattter = new MessageFormat("Konsument {5}, Temat {0}, partycja {1}, offset {2, number, integer}, klucz {3}, wartość {4}");
+            while (true) {
+                ConsumerRecords<UUID, String> records = consumer.poll(timeout);
+                for (ConsumerRecord<UUID, String> record : records) {
+                    String result = formattter.format(new Object[]{
+                            record.topic(),
+                            record.partition(),
+                            record.offset(),
+                            record.key(),
+                            record.value(),
+                            consumer.groupMetadata().memberId()
+                    });
+                    System.out.println(result);
+                }
+            }
+
+
+        } catch (WakeupException e) {
+            System.out.println("Job finished");
+        }
+    }
+
+
+    @Test
+    public void consumeTopicsByGroup() throws InterruptedException {
+        initConsumerGroup();
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        for (KafkaConsumer<UUID, String> consumer : consumerGroup) {
+            executorService.execute(() -> consume(consumer));
+        }
+        Thread.sleep(10000);
+        for (KafkaConsumer<UUID, String> consumer : consumerGroup) {
+            consumer.wakeup();
+        }
+        executorService.shutdown();
     }
 
 }
