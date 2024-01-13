@@ -25,7 +25,7 @@ public class RentRepository extends AbstractMongoRepository {
     public RentRepository()  {
         this.rentCollection = initDbConnection().getCollection("rents", Rent.class);
         try {
-            Producer.createTopic("rents");
+            Producer.createTopic("rents2");
         } catch (Exception e) {
             System.out.println("Topic already exists");
         }

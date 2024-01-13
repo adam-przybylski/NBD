@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 
 public class Consumer {
 
-    static String consumerGroupId = "rentConsumers";
+    static String consumerGroupId = "rentConsumers2";
 
     static List<KafkaConsumer<UUID, String>> consumerGroup;
 
@@ -35,7 +35,7 @@ public class Consumer {
         consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, UUIDDeserializer.class.getName());
         consumerConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         consumerConfig.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
-        //consumerConfig.put(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, consumerGroupId);
+//        consumerConfig.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         consumerConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka1:9192, kafka2:9292, kafka3:9392");
 
         for (int i = 0; i < 2; i++) {
@@ -51,7 +51,7 @@ public class Consumer {
             consumer.poll(0);
             Set<TopicPartition> consumerAssigment = consumer.assignment();
             System.out.println(consumer.groupMetadata().memberId() + " " + consumerAssigment);
-            consumer.seekToBeginning(consumerAssigment);
+//            consumer.seekToBeginning(consumerAssigment);
 
             Duration timeout = Duration.of(100, ChronoUnit.MILLIS);
             MessageFormat formattter = new MessageFormat("Konsument {5}, Temat {0}, partycja {1}, offset {2, number, integer}, klucz {3}, wartość " +
@@ -70,9 +70,9 @@ public class Consumer {
                             consumer.groupMetadata().memberId()
                     });
                     System.out.println(result);
+                    consumer.commitSync();
                 }
             }
-
 
         } catch (WakeupException e) {
             System.out.println("Job finished");
@@ -87,7 +87,7 @@ public class Consumer {
         for (KafkaConsumer<UUID, String> consumer : consumerGroup) {
             executorService.execute(() -> consume(consumer));
         }
-        Thread.sleep(10000);
+        Thread.sleep(60000);
         for (KafkaConsumer<UUID, String> consumer : consumerGroup) {
             consumer.wakeup();
         }
